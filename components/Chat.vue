@@ -1,5 +1,5 @@
 <template>
-  <div class="col col-md-8 order-first order-md-2">
+  <div class="col-12 col-md-8 order-first order-md-2">
     <iframe src="https://chat.somdomato.com" frameborder="0" allowfullscreen></iframe>
   </div>
 </template>

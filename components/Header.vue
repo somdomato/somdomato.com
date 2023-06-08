@@ -47,9 +47,7 @@ async function doSearch() {
           </ul>
 
           <form class="d-flex" role="search" @submit.prevent="doSearch">
-            <!-- <input class="form-control me-2 bg-dark text-white" type="search" placeholder="Música ou Artista" aria-label="Música ou Artista" /> -->
-            <!-- <button class="btn btn-outline-success" type="submit">Pesquisar</button> -->
-            <div class="input-group input-group-sm mb-3">
+            <div class="input-group input-group-sm mb-3 mb-md-0">
               <input ref="inputsearch" v-model="search" type="text" class="form-control bg-dark text-white" :placeholder="placeholder" aria-label="Música ou Artista" aria-describedby="button-addon" style="font-size: 16px;" />
               <button class="btn btn-danger" type="submit" id="button-addon">Pesquisar</button>
             </div>

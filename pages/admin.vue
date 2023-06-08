@@ -9,5 +9,5 @@ definePageMeta({ layout: false })
   </NuxtLayout>
 </template>
 <style>
-@import url('/css/dashboard.css');
+/* @import url('css/dashboard.css'); */
 </style>
