@@ -22,30 +22,31 @@ async function doRequest(id) {
   searchResults.value = []
 }
 
-onMounted(async _ => {
-  song.value = await useIcecastStats('title')
+// onMounted(async _ => {
+//   // song.value = await useIcecastStats()
 
-  $ws.onmessage = async event => {
-    const msg = JSON.parse(event.data)
-    switch (msg.action) {
-      case 'songchanged':
-        song.value = await useIcecastStats('title')
-        console.log('Song Changed: ', song.value)
-        break
-      case 'requestadded':
-        console.log('New request', event.data)
-        break
-      default:
-        console.log('New server message: ', event.data)
-    }
-  }
-})
+//   // $ws.onmessage = async event => {
+//   //   const msg = JSON.parse(event.data)
+//   //   switch (msg.action) {
+//   //     case 'songchanged':
+//   //       song.value = await useIcecastStats('title')
+//   //       console.log('Song Changed: ', song.value)
+//   //       break
+//   //     case 'requestadded':
+//   //       console.log('New request', event.data)
+//   //       break
+//   //     default:
+//   //       console.log('New server message: ', event.data)
+//   //   }
+//   // }
+// })
 </script>
 <template>
   <Header :song="song" @search-results="showSearchResults" />
   <main class="h-100">
     <div class="container h-100">
       <slot />
+      
       <div class="row" v-if="searchResults.length > 0">
         <div class="col-12">
           <table class="table table-borderless table-dark">

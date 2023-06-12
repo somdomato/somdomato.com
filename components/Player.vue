@@ -1,4 +1,10 @@
 <script setup>
+let { $ws } = useNuxtApp()
+const song = ref('Rádio Som do Mato')
+// const searchResults = ref([])
+
+const counter = useState('counter', () => Math.round(Math.random() * 1000))
+
 const audio = ref(null)
 const volumeperc = ref(null)
 const playPauseIcon = ref('ph:play-fill')
@@ -44,20 +50,37 @@ function cycleStream() {
   audio.value.play()
 }
 
-onMounted(_ => {
+onMounted(async _ => {
+  song.value = await useIcecastStats()
+
   isMobile.value = window.innerWidth < 768 ? true : false
   emit('isMobile', isMobile)
   audio.value.firstChild.src = props.stream + '?ts=' + ~~(Date.now() / 1000)
 
-  audio.value.onpause = _ => {
-    audio.value.firstChild.src = props.stream + '?ts=' + ~~(Date.now() / 1000)
-    audio.value.load()
-  }
+  // audio.value.onpause = _ => {
+  //   audio.value.firstChild.src = props.stream + '?ts=' + ~~(Date.now() / 1000)
+  //   audio.value.load()
+  // }
 
   window.addEventListener('resize', _ => {
     isMobile.value = window.innerWidth < 768 ? true : false
     emit('isMobile', isMobile)
   })
+
+  $ws.onmessage = async event => {
+    const msg = JSON.parse(event.data)
+    switch (msg.action) {
+      case 'songchanged':
+        song.value = await useIcecastStats()
+        console.log('Song Changed: ', song.value)
+        break
+      case 'requestadded':
+        console.log('New request', event.data)
+        break
+      default:
+        console.log('New server message: ', event.data)
+    }
+  }
 })
 </script>
 <template>
@@ -85,7 +108,7 @@ onMounted(_ => {
         </div>
       </div>
 
-      <div class="title">{{ props.title }}</div>
+      <div class="title">{{ song }}</div>
     </div>
   </div>
 </template>

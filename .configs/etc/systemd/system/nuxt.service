@@ -1,0 +1,20 @@
+[Unit]
+Description=Nuxt.js Unit
+Documentation=https://nuxt.com
+After=network.target
+
+[Service]
+Type=simple
+User=nginx
+
+Environment=NITRO_PORT=3000
+Environment=NITRO_HOST=127.0.0.1
+
+WorkingDirectory=/var/www/somdomato.com
+ExecStart=/usr/bin/node /var/www/somdomato.com/.output/server/index.mjs
+
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

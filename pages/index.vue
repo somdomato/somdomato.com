@@ -1,7 +1,7 @@
 <template>
   <div class="row h-100">
     <Last />
-    <Chat />
+    <!-- <Chat /> -->
     <Requests />
   </div>
 </template>

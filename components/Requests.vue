@@ -1,5 +1,5 @@
 <template>
   <div class="col order-3">
-    Requests
+    Próximas
   </div>
 </template>

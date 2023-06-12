@@ -1,0 +1,5 @@
+[Path]
+PathModified=/var/www/somdomato.com
+
+[Install]
+WantedBy=multi-user.target

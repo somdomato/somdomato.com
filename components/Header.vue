@@ -9,9 +9,11 @@ defineProps({song: {type: String }})
 const emit = defineEmits(['searchResults'])
 
 async function doSearch() {
+  console.log('Search');
+
   if (search.value !== '' && search.value.length > 3) {
     const { data } = await useFetch(`http://localhost:4000/song/?q=${search.value}`)
-    search.value = ''
+    // search.value = ''
     const { songs } = toRaw(data.value)
     emit('searchResults', songs)
   } else if (search.value === '' || search.value.length < 3) {
