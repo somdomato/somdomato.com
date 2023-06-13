@@ -1,21 +1,9 @@
 <script setup>
-let { $ws } = useNuxtApp()
-const { data } = await useFetch('http://localhost:4000/historico')
-const songs = ref([])
-
-onMounted(async _ => {
-  $ws.onmessage = async event => {
-    const songs = toRaw(data.value)
-    // const msg = JSON.parse(event.data)
-    console.log('New server message: ', JSON.parse(event.data))
-  }
-})
+defineProps({ songs: Object })
 </script>
 <template>
   <div class="col order-2 order-md-1">
     Últimas
-
-    {{ songs }}
     <div class="table-responsive">
       <table class="table table-dark table-sm table-borderless">
         <thead>
@@ -25,9 +13,9 @@ onMounted(async _ => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Musica</td>
+          <tr v-for="hist in songs">
+            <th scope="row">{{ hist.song.id }}</th>
+            <td>{{ hist.song.artist }} - {{ hist.song.title }}</td>
           </tr>
         </tbody>
       </table>

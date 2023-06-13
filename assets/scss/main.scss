@@ -26,5 +26,11 @@ body {
 }
 
 main > .container {
-  padding: 65px 15px 0;
+  padding: 68px 15px 0;
+}
+
+input,
+input:focus {
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow: none;
 }

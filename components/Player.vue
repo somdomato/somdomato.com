@@ -2,8 +2,8 @@
 let { $ws } = useNuxtApp()
 const song = ref('Rádio Som do Mato')
 // const searchResults = ref([])
-
-const counter = useState('counter', () => Math.round(Math.random() * 1000))
+// const counter = useState('counter', () => Math.round(Math.random() * 1000))
+// const songs = useState('lastSongs', _ => 'Songggg')
 
 const audio = ref(null)
 const volumeperc = ref(null)
@@ -16,9 +16,7 @@ const props = defineProps({
   stream: { type: String, default: 'https://radio.somdomato.com/principal' }
 })
 
-const emit = defineEmits({
-  isMobile: { type: Boolean, default: false }
-})
+const emit = defineEmits({ isMobile: { type: Boolean, default: false } })
 
 function playHandle() {
   if (audio.value.paused) {
@@ -27,7 +25,7 @@ function playHandle() {
   } else {
     playPauseIcon.value = 'ph:play-fill'
     audio.value.pause()
-  }
+  }  
 }
 
 function muteHandle() {
@@ -69,16 +67,22 @@ onMounted(async _ => {
 
   $ws.onmessage = async event => {
     const msg = JSON.parse(event.data)
+    const history = await useHistory()
+
+    // console.log(songs)
+
+    useState('lastSongs', _ => history)
+    song.value = await useIcecastStats()
+
     switch (msg.action) {
       case 'songchanged':
-        song.value = await useIcecastStats()
-        console.log('Song Changed: ', song.value)
+        // console.log('Song Changed:', song.value)
         break
       case 'requestadded':
-        console.log('New request', event.data)
+        // console.log('New request', event.data)
         break
       default:
-        console.log('New server message: ', event.data)
+        console.log('New server message:', event.data)
     }
   }
 })

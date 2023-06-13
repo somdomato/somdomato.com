@@ -1,32 +1,13 @@
 <script setup>
-const inputsearch = ref(null)
-const search = ref('')
-const placeholder = ref('Música ou Artista')
+const search = useState('search')
 const open = ref(false)
 
-defineProps({song: {type: String }})
+// async function doSearch() {
+//   useState('search', inputsearch.value)
+// }
 
-const emit = defineEmits(['searchResults'])
-
-async function doSearch() {
-  console.log('Search');
-
-  if (search.value !== '' && search.value.length > 3) {
-    const { data } = await useFetch(`http://localhost:4000/song/?q=${search.value}`)
-    // search.value = ''
-    const { songs } = toRaw(data.value)
-    emit('searchResults', songs)
-  } else if (search.value === '' || search.value.length < 3) {
-    let oldSearch = search.value
-    search.value = ''
-    placeholder.value = 'Pelo menos 3 caracteres!!'
-
-    setTimeout(() => {
-      placeholder.value = 'Música ou Artista'   
-      search.value = oldSearch   
-      inputsearch.value.focus()
-    }, 3000);    
-  }  
+async function clearSearch() {
+  search.value = ''
 }
 </script>
 <template>
@@ -37,21 +18,25 @@ async function doSearch() {
           <img src="/img/logotipo.svg" alt="Rádio Som do Mato" width="30" height="30" class="d-inline-block m-0 me-1" />
           Som do Mato
         </NuxtLink>
-
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" :class="{ show: open }" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <Player :title="song" @is-mobile="n => (open = n)" />
-            <!-- <li class="nav-item"><a class="nav-link" href="#">Link</a></li> -->
+            <Player @is-mobile="n => (open = n)" />
           </ul>
-
-          <form class="d-flex" role="search" @submit.prevent="doSearch">
+          <form class="d-flex" role="search">
             <div class="input-group input-group-sm mb-3 mb-md-0">
-              <input ref="inputsearch" v-model="search" type="text" class="form-control bg-dark text-white" :placeholder="placeholder" aria-label="Música ou Artista" aria-describedby="button-addon" style="font-size: 16px;" />
-              <button class="btn btn-danger" type="submit" id="button-addon">Pesquisar</button>
+              <input 
+                v-model="search" 
+                type="text" 
+                class="form-control bg-dark text-white" 
+                placeholder="Música ou Artista" 
+                aria-label="Música ou Artista" 
+                aria-describedby="button-addon" 
+                style="font-size: 16px;" 
+              />
+              <button class="btn btn-danger" type="reset" id="button-addon" @click="clearSearch">Limpar</button>
             </div>
           </form>
         </div>
@@ -60,9 +45,5 @@ async function doSearch() {
   </header>
 </template>
 <style scoped>
-input,
-input:focus {
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  box-shadow: none;
-}
+
 </style>
