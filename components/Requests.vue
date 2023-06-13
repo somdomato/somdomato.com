@@ -6,12 +6,12 @@ const search = useState('search')
 
 async function doRequest(id) {
   const { data } = await useFetch(`http://localhost:4000/req/${id}`)
-  const { message } = toRaw(data.value)
+  const { status, message } = toRaw(data.value)
 
   swal.fire({
-    title: 'Sucesso!',
+    title: status == 'success' ? 'Sucesso!' : 'Erro!',
     text: message,
-    icon: 'success',
+    icon: status,
     confirmButtonText: 'Fechar'
   })
 
