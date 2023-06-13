@@ -11,9 +11,18 @@ body,
   flex-direction: column;
 }
 
-html { 
-  // background-image: linear-gradient(to bottom, rgba(255,168,76,0.6) 0%,rgba(255,123,13,0.6) 100%), url('/img/bg.jpg');
-  // background: url('/img/bg.jpg') no-repeat center center fixed; 
+// html { 
+//   // background-image: linear-gradient(to bottom, rgba(255,168,76,0.6) 0%,rgba(255,123,13,0.6) 100%), url('/img/bg.jpg');
+//   background: url('/img/bg.jpg') no-repeat center center fixed; 
+//   // background-image: linear-gradient(to bottom, rgba(255,168,76,0.6) 0%,rgba(255,123,13,0.6) 100%), url('/img/bg.jpg') no-repeat center center fixed;
+//   -webkit-background-size: cover;
+//   -moz-background-size: cover;
+//   -o-background-size: cover;
+//   background-size: cover;
+// }
+
+body {
+  font-family: 'Nunito', sans-serif;
   background-image: linear-gradient(to bottom, rgba(255,168,76,0.6) 0%,rgba(255,123,13,0.6) 100%), url('/img/bg.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -21,16 +30,6 @@ html {
   background-size: cover;
 }
 
-body {
-  font-family: 'Nunito', sans-serif;
-}
-
 main > .container {
   padding: 68px 15px 0;
-}
-
-input,
-input:focus {
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  box-shadow: none;
 }

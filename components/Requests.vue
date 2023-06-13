@@ -1,7 +1,7 @@
 <script setup>
 const searchResults = ref([])
 const searchTotal = ref(0)
-// const swal = inject('$swal')
+const swal = inject('$swal')
 const search = useState('search')
 
 async function doRequest(id) {
@@ -31,7 +31,8 @@ async function doSearch() {
 }
 </script>
 <template>
-  <div class="col-12 order-4" v-if="search">
+  <!-- <div class="col-12 order-4" v-if="search"> -->
+  <div class="col-12 order-4">
     <h2>Pedidos</h2>
 
     <form class="d-flex" role="search" @submit.prevent="doSearch">
@@ -47,19 +48,19 @@ async function doSearch() {
           style="font-size: 16px;" 
         />
         <button class="btn btn-danger" type="reset" id="button-addon">Limpar</button>
-        <button class="btn btn-info" type="submit" id="button-addon">Pesquisar</button>
+        <button class="btn btn-primary" type="submit" id="button-addon">Pesquisar</button>
       </div>
     </form>
 
     <table class="table table-borderless table-dark">
-      <thead>
+      <!-- <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Artista</th>
           <th scope="col">Música</th>
           <th scope="col">Pedir</th>
         </tr>
-      </thead>
+      </thead> -->
       <tbody>
         <tr v-for="(item, index) in searchResults">
           <th scope="row">{{ index + 1 }}</th>
@@ -72,9 +73,15 @@ async function doSearch() {
       </tbody>
     </table>
 
-    Total: {{ searchTotal }}
+    <p v-if="searchResults.length > 1">Total: {{ searchTotal }}</p>
   </div>
 </template>
-<style lang="scss">
-// @import url('@sweetalert2/themes/dark/dark.scss');
+<style lang="scss" scoped>
+@import "~~/@sweetalert2/theme-dark/dark.scss";
+
+input,
+input:focus {
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow: none;
+}
 </style>

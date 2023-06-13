@@ -10,7 +10,7 @@
       <Meta property="og:image" content="http://somdomato.com/img/ogp.png" />
       <Link rel="icon" href="/favicon.ico" />
     </Head>
-    <Body class="d-flex flex-column h-100 bg-dark text-white" />
+    <Body class="d-flex flex-column h-100 text-white" />
     <NuxtPage />
   </NuxtLayout>
 </template>

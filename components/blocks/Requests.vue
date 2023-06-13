@@ -2,10 +2,10 @@
 defineProps({ songs: Object })
 </script>
 <template>
-  <div class="col order-3">
+  <div class="col-12 col-md-2 order-3">
     Próximas
     <div class="table-responsive">
-      <table class="table table-dark table-sm table-borderless">
+      <table class="table table-dark table-sm">
         <thead>
           <tr>
             <th scope="col">#</th>
