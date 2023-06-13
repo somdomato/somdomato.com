@@ -1,9 +1,6 @@
 <script setup>
-let { $ws } = useNuxtApp()
 const song = ref('Rádio Som do Mato')
 const searchResults = ref([])
-// const { title } = await useIcecastStats()
-// const swal = inject('$swal')
 
 function showSearchResults(results) {
   searchResults.value = results

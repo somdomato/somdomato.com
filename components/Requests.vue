@@ -1,7 +1,7 @@
 <script setup>
 const searchResults = ref([])
 const searchTotal = ref(0)
-const swal = inject('$swal')
+// const swal = inject('$swal')
 const search = useState('search')
 
 async function doRequest(id) {

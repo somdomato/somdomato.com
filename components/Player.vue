@@ -5,7 +5,7 @@ const audio = ref(null)
 const volumeperc = ref(null)
 const playPauseIcon = ref('ph:play-fill')
 const volumeIcon = ref('ph:speaker-simple-high-fill')
-const isMobile = ref(false)
+
 
 const props = defineProps({
   title: { type: String, default: 'Rádio Som do Mato' },
@@ -54,7 +54,8 @@ onMounted(async _ => {
 
   $ws.onmessage = async event => {
     console.log('Server Message!!!!!!!!!!!!!!!!!')
-    const msg = JSON.parse(event.data)
+    // const msg = JSON.parse(event.data)
+    // msg.action
     const history = await useHistory()
     useState('lastSongs', _ => history)
     title.value = await useIcecastStats()
