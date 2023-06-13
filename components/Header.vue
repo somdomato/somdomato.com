@@ -1,15 +1,3 @@
-<script setup>
-const search = useState('search')
-const open = ref(false)
-
-// async function doSearch() {
-//   useState('search', inputsearch.value)
-// }
-
-async function clearSearch() {
-  search.value = ''
-}
-</script>
 <template>
   <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark my-0">
@@ -18,32 +6,15 @@ async function clearSearch() {
           <img src="/img/logotipo.svg" alt="Rádio Som do Mato" width="30" height="30" class="d-inline-block m-0 me-1" />
           Som do Mato
         </NuxtLink>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" :class="{ show: open }" id="navbarCollapse">
-          <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <Player @is-mobile="n => (open = n)" />
-          </ul>
-          <form class="d-flex" role="search">
-            <div class="input-group input-group-sm mb-3 mb-md-0">
-              <input 
-                v-model="search" 
-                type="text" 
-                class="form-control bg-dark text-white" 
-                placeholder="Música ou Artista" 
-                aria-label="Música ou Artista" 
-                aria-describedby="button-addon" 
-                style="font-size: 16px;" 
-              />
-              <button class="btn btn-danger" type="reset" id="button-addon" @click="clearSearch">Limpar</button>
-            </div>
-          </form>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <Menu />
+          <Player />
         </div>
       </div>
     </nav>
   </header>
 </template>
-<style scoped>
-
-</style>

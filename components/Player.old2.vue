@@ -33,6 +33,7 @@ function volumeHandle(event) {
   const rect = event.currentTarget.getBoundingClientRect()
   const percent = (Math.min(Math.max(0, event.x - rect.x), rect.width) / rect.width) * 100
   const newVolume = parseInt(percent)
+  if (newVolume > 94) newVolume = 100
   volumeperc.value.style.width = newVolume + '%'
   audio.value.volume = newVolume / 100
 }
@@ -45,12 +46,21 @@ function cycleStream() {
 
 onMounted(async _ => {
   title.value = await useIcecastStats()
+
+  isMobile.value = window.innerWidth < 768 ? true : false
+  emit('isMobile', isMobile)
+
   audio.value.firstChild.src = props.stream + '?ts=' + ~~(Date.now() / 1000)
 
   // audio.value.onpause = _ => {
   //   audio.value.firstChild.src = props.stream + '?ts=' + ~~(Date.now() / 1000)
   //   audio.value.load()
   // }
+
+  window.addEventListener('resize', _ => {
+    isMobile.value = window.innerWidth < 768 ? true : false
+    emit('isMobile', isMobile)
+  })
 
   $ws.onmessage = async event => {
     console.log('Server Message!!!!!!!!!!!!!!!!!')
@@ -62,59 +72,45 @@ onMounted(async _ => {
 })
 </script>
 <template>
-  <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+  <div class="player-container">
+    <audio ref="audio">
+      <source src="https://radio.somdomato.com/principal" type="audio/mp3" />
+    </audio>
 
-    <li class="nav-item d-flex align-items-center">
+    <div class="controls">
+      <div class="play-container">
+        <Icon :name="playPauseIcon" @click.prevent="playHandle()" />
+      </div>
+
+      <div class="cycle-container">
+        <Icon name="ph:recycle-bold" @click="cycleStream" />
+      </div>
+
+      <div ref="volume-container" class="volume-container" v-if="!isMobile">
+        <div class="volume-button">
+          <Icon :name="volumeIcon" @click="muteHandle" />
+        </div>
+
+        <div ref="volumeslider" class="volume-slider" @click="volumeHandle">
+          <div ref="volumeperc" class="volume-percentage"></div>
+        </div>
+      </div>
+
       <div class="wrapper">
         <div class="title">
           {{ title }}
         </div>
       </div>
-    </li>
-
-    <li class="nav-item">
-      <div class="player-container">
-        <audio ref="audio">
-          <source src="https://radio.somdomato.com/principal" type="audio/mp3" />
-        </audio>
-
-        <div class="controls">
-          <div class="play-container">
-            <Icon :name="playPauseIcon" @click.prevent="playHandle()" />
-          </div>
-
-          <div class="cycle-container">
-            <Icon name="ph:recycle-bold" @click="cycleStream" />
-          </div>
-
-          <div ref="volume-container" class="volume-container">
-            <div class="volume-button">
-              <Icon :name="volumeIcon" @click="muteHandle" />
-            </div>
-
-            <div ref="volumeslider" class="volume-slider" @click="volumeHandle">
-              <div ref="volumeperc" class="volume-percentage"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </li>
-
-
-
-  </ul>
+    </div>
+  </div>
 </template>
 <style scoped lang="scss">
 .wrapper {
   display: grid;
   align-content: stretch;
+  padding: 5px;
   min-width: 0;
-}
-
-.title {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  border: 1px solid
 }
 
 .player-container {
@@ -139,16 +135,33 @@ onMounted(async _ => {
       align-items: center;
     }
 
+    .title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .volume-container {
+      position: relative;
+      z-index: 2;
       cursor: pointer;
 
       .volume-button {
+        height: 26px;
         display: flex;
         align-items: center;
+
+        .volume {
+          transform: scale(1);
+        }
       }
 
       .volume-slider {
-        width: 50px;
+        position: absolute;
+        left: 20px;
+        // top: 15px;
+        z-index: -1;
+        width: 0;
         height: 8px;
         background: white;
         box-shadow: 0 0 20px #000;
@@ -161,11 +174,12 @@ onMounted(async _ => {
         }
       }
 
-      // .volume-slider {
-      //   // left: 28px;
-      //   width: 140px;
-      // }
-
+      &:hover {
+        .volume-slider {
+          left: 28px;
+          width: 140px;
+        }
+      }
     }
   }
 }
