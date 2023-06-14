@@ -1,5 +1,5 @@
 <script setup>
-const config = useRuntimeConfig()
+let { $ws } = useNuxtApp()
 const title = ref('Rádio Som do Mato')
 const audio = ref(null)
 const volumeperc = ref(null)
@@ -59,20 +59,17 @@ async function cycleStreamAndPlay() {
   playPauseIcon.value = 'ph:pause-fill'
 }
 
-let ws
-
 onMounted(() => {
   cycleStream()
   audio.value.onpause = _ => cycleStream()
 
-  ws = new WebSocket('ws://localhost:4000');
-  ws.onmessage = async (event) => {
-    title.value = await useIcecastStats()
-    const history = await useGetQueue(`${config.public.apiBase}/historico`)
-    const requests = await useGetQueue(`${config.public.apiBase}/pedidos`)
+  $ws.onmessage = (event) => {
+    title.value = useIcecastStats()
+    console.log('Server Message!!!!!!!!!!!!!!!!!')
+    // const msg = JSON.parse(event.data)
+    const history = useHistory()
     useState('lastSongs', () => history)
-    useState('lastRequests', () => requests)
-  }  
+  }
 })
 </script>
 <template>

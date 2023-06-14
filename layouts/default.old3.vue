@@ -1,7 +1,7 @@
 <template>
   <Header />
-  <main>
-    <div class="container">
+  <main class="h-100">
+    <div class="container h-100">
       <slot />
     </div>
   </main>

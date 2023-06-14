@@ -11,10 +11,17 @@ export default defineNuxtConfig({
       Nunito: true
     }
   },
-  router: { 
-    options: { 
+  router: {
+    options: {
       linkActiveClass: 'active',
-      linkExactActiveClass: 'exact-active' 
-    } 
+      linkExactActiveClass: 'exact-active'
+    }
+  },
+  runtimeConfig: {
+    public: {
+      appBase: process.env.NUXT_PUBLIC_APP_BASE || "http://localhost:3000",
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:4000",
+      wssBase: process.env.NUXT_PUBLIC_WSS_BASE || "ws://localhost:4000"
+    }
   }
 })

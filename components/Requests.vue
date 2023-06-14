@@ -27,53 +27,36 @@ async function doSearch() {
 
     searchResults.value = songs.data
     searchTotal.value = songs.total
-  } 
+  }
 }
 </script>
 <template>
-  <!-- <div class="col-12 order-4" v-if="search"> -->
   <div class="col-12 order-4">
-    <h2>Pedidos</h2>
-
-    <form class="d-flex" role="search" @submit.prevent="doSearch">
-      <div class="input-group input-group mb-3">
-        <input 
-          ref="inputsearch" 
-          v-model="search" 
-          type="text" 
-          class="form-control bg-dark text-white"
-          placeholder="Música ou Artista" 
-          aria-label="Música ou Artista" 
-          aria-describedby="button-addon"
-          style="font-size: 16px;" 
-        />
-        <button class="btn btn-danger" type="reset" id="button-addon">Limpar</button>
-        <button class="btn btn-primary" type="submit" id="button-addon">Pesquisar</button>
-      </div>
-    </form>
-
-    <table class="table table-borderless table-dark">
-      <!-- <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Artista</th>
-          <th scope="col">Música</th>
-          <th scope="col">Pedir</th>
-        </tr>
-      </thead> -->
-      <tbody>
-        <tr v-for="(item, index) in searchResults">
-          <th scope="row">{{ index + 1 }}</th>
-          <td>{{ item.artist }}</td>
-          <td>{{ item.title }}</td>
-          <td>
-            <button type="button" class="btn btn-success btn-sm" @click="doRequest(item.id)">Pedir</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p v-if="searchResults.length > 1">Total: {{ searchTotal }}</p>
+    <div class="bg-dark rounded-2 p-2 h-100">
+      <h2>Pedidos</h2>
+      <form class="d-flex" role="search" @submit.prevent="doSearch">
+        <div class="input-group input-group mb-3">
+          <input ref="inputsearch" v-model="search" type="text" class="form-control bg-dark text-white"
+            placeholder="Música ou Artista" aria-label="Música ou Artista" aria-describedby="button-addon"
+            style="font-size: 16px;" />
+          <button class="btn btn-danger" type="reset" id="button-addon">Limpar</button>
+          <button class="btn btn-primary" type="submit" id="button-addon">Pesquisar</button>
+        </div>
+      </form>
+      <table class="table table-borderless table-dark">
+        <tbody>
+          <tr v-for="(item, index) in searchResults">
+            <th scope="row">{{ index + 1 }}</th>
+            <td>{{ item.artist }}</td>
+            <td>{{ item.title }}</td>
+            <td>
+              <button type="button" class="btn btn-success btn-sm" @click="doRequest(item.id)">Pedir</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p v-if="searchResults.length > 1">Total: {{ searchTotal }}</p>
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
