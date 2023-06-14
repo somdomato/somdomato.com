@@ -1,5 +1,5 @@
 <script setup>
-import WebSocket from 'ws'
+import { wsConnect } from '~/assets/js/utils'
 
 const config = useRuntimeConfig()
 const title = ref('Rádio Som do Mato')
@@ -8,7 +8,6 @@ const volumeperc = ref(null)
 const oldVol = ref(1)
 const playPauseIcon = ref('ph:play-fill')
 const volumeIcon = ref('ph:speaker-simple-high-fill')
-const ws = new WebSocket(config.public.wssBase)
 const props = defineProps({ stream: { type: String, default: 'https://radio.somdomato.com/principal' } })
 const emit = defineEmits({ isMobile: { type: Boolean, default: false } })
 
@@ -55,33 +54,19 @@ async function cycleStreamAndPlay() {
   playPauseIcon.value = 'ph:pause-fill'
 }
 
+async function refreshData(data) {
+  title.value = await useIcecastStats()
+  const history = await useGetQueue(`${config.public.apiBase}/historico`)
+  const requests = await useGetQueue(`${config.public.apiBase}/pedidos`)
+  useState('lastSongs', () => history)
+  useState('lastRequests', () => requests)
+  console.log('WebSockets Received: %s', data)
+}
+
 onMounted(() => {
+  cycleStream()
   audio.value.onpause = _ => cycleStream()
-
-  ws.on('error', console.error);
-
-  // ws.on('open', function open() {
-  //   ws.send('something');
-  // })
-
-  ws.on('message', async function message(data) {
-    title.value = await useIcecastStats()
-    const history = await useGetQueue(`${config.public.apiBase}/historico`)
-    const requests = await useGetQueue(`${config.public.apiBase}/pedidos`)
-    useState('lastSongs', () => history)
-    useState('lastRequests', () => requests)
-    console.log('WebSockets Received: %s', data)
-  })
-
-
-
-  // ws.onmessage = async (event) => {
-  //   title.value = await useIcecastStats()
-  //   const history = await useGetQueue(`${config.public.apiBase}/historico`)
-  //   const requests = await useGetQueue(`${config.public.apiBase}/pedidos`)
-  //   useState('lastSongs', () => history)
-  //   useState('lastRequests', () => requests)
-  // }  
+  wsConnect(config.public.wssBase, refreshData)
 })
 </script>
 <template>
@@ -123,59 +108,5 @@ onMounted(() => {
   </ul>
 </template>
 <style scoped lang="scss">
-.wrapper {
-  display: grid;
-  align-content: stretch;
-  min-width: 0;
-}
-
-.title {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.player-container {
-  display: grid;
-  grid-template-rows: 1fr;
-  height: 40px;
-  overflow: hidden;
-
-  .controls {
-    display: flex;
-    align-items: stretch;
-    padding: 0 10px;
-    gap: 10px;
-
-    >* {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .volume-container {
-      cursor: pointer;
-
-      .volume-button {
-        display: flex;
-        align-items: center;
-        margin-right: 5px;
-      }
-
-      .volume-slider {
-        width: 50px;
-        height: 8px;
-        background: white;
-        box-shadow: 0 0 20px #000;
-        transition: 0.25s;
-
-        .volume-percentage {
-          background: coral;
-          height: 100%;
-          width: 100%;
-        }
-      }
-    }
-  }
-}
+@import '~/assets/scss/player.scss';
 </style>
