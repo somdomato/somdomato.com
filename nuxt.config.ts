@@ -19,9 +19,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      appBase: process.env.NUXT_PUBLIC_APP_BASE || "http://localhost:3000",
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:4000",
-      wssBase: process.env.NUXT_PUBLIC_WSS_BASE || "ws://localhost:4000"
+      appBase: process.env.NUXT_PUBLIC_APP_BASE || "https://somdomato.com",
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || "https://api.somdomato.com",
+      wssBase: process.env.NUXT_PUBLIC_WSS_BASE || "wss://ws.somdomato.com"
     }
   }
 })

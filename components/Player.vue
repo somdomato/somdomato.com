@@ -6,12 +6,9 @@ const volumeperc = ref(null)
 const oldVol = ref(1)
 const playPauseIcon = ref('ph:play-fill')
 const volumeIcon = ref('ph:speaker-simple-high-fill')
+const ws = new WebSocket(config.public.wssBase)
 
-const props = defineProps({
-  title: { type: String, default: 'Rádio Som do Mato' },
-  stream: { type: String, default: 'https://radio.somdomato.com/principal' }
-})
-
+const props = defineProps({ stream: { type: String, default: 'https://radio.somdomato.com/principal' } })
 const emit = defineEmits({ isMobile: { type: Boolean, default: false } })
 
 function playHandle() {
@@ -26,15 +23,13 @@ function playHandle() {
 
 function muteHandle() {
   oldVol.value = audio.value.volume
-  audio.value.muted = !audio.value.muted
-  
+  audio.value.muted = !audio.value.muted  
   if (audio.value.muted) {
     volumeperc.value.style.width = '0%'
   } else {
     volumeperc.value.style.width = (oldVol.value * 100) + '%'
     console.log(oldVol.value)
-  }
-  
+  }  
   volumeIcon.value = audio.value.muted ? 'ph:speaker-simple-x-fill' : 'ph:speaker-simple-high-fill'
 }
 
@@ -59,13 +54,8 @@ async function cycleStreamAndPlay() {
   playPauseIcon.value = 'ph:pause-fill'
 }
 
-let ws
-
 onMounted(() => {
-  cycleStream()
   audio.value.onpause = _ => cycleStream()
-
-  ws = new WebSocket('ws://localhost:4000');
   ws.onmessage = async (event) => {
     title.value = await useIcecastStats()
     const history = await useGetQueue(`${config.public.apiBase}/historico`)
