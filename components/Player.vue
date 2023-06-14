@@ -1,4 +1,6 @@
 <script setup>
+import WebSocket from 'ws'
+
 const config = useRuntimeConfig()
 const title = ref('Rádio Som do Mato')
 const audio = ref(null)
@@ -7,7 +9,6 @@ const oldVol = ref(1)
 const playPauseIcon = ref('ph:play-fill')
 const volumeIcon = ref('ph:speaker-simple-high-fill')
 const ws = new WebSocket(config.public.wssBase)
-
 const props = defineProps({ stream: { type: String, default: 'https://radio.somdomato.com/principal' } })
 const emit = defineEmits({ isMobile: { type: Boolean, default: false } })
 
@@ -23,13 +24,13 @@ function playHandle() {
 
 function muteHandle() {
   oldVol.value = audio.value.volume
-  audio.value.muted = !audio.value.muted  
+  audio.value.muted = !audio.value.muted
   if (audio.value.muted) {
     volumeperc.value.style.width = '0%'
   } else {
     volumeperc.value.style.width = (oldVol.value * 100) + '%'
     console.log(oldVol.value)
-  }  
+  }
   volumeIcon.value = audio.value.muted ? 'ph:speaker-simple-x-fill' : 'ph:speaker-simple-high-fill'
 }
 
@@ -56,13 +57,31 @@ async function cycleStreamAndPlay() {
 
 onMounted(() => {
   audio.value.onpause = _ => cycleStream()
-  ws.onmessage = async (event) => {
+
+  ws.on('error', console.error);
+
+  // ws.on('open', function open() {
+  //   ws.send('something');
+  // })
+
+  ws.on('message', async function message(data) {
     title.value = await useIcecastStats()
     const history = await useGetQueue(`${config.public.apiBase}/historico`)
     const requests = await useGetQueue(`${config.public.apiBase}/pedidos`)
     useState('lastSongs', () => history)
     useState('lastRequests', () => requests)
-  }  
+    console.log('WebSockets Received: %s', data)
+  })
+
+
+
+  // ws.onmessage = async (event) => {
+  //   title.value = await useIcecastStats()
+  //   const history = await useGetQueue(`${config.public.apiBase}/historico`)
+  //   const requests = await useGetQueue(`${config.public.apiBase}/pedidos`)
+  //   useState('lastSongs', () => history)
+  //   useState('lastRequests', () => requests)
+  // }  
 })
 </script>
 <template>
