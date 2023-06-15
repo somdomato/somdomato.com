@@ -1,19 +1,34 @@
-export async function wsConnect(url, callback) {
-  let ws = new WebSocket(url)
+let socket = null;
 
-  ws.onmessage = function (event) {
-    callback(event.data)
+export const wsConnect = (url, callback) => {
+  socket = new WebSocket(url)
+
+  socket.onopen = () => {
+    console.log('Conexão estabelecida com o servidor')
   }
 
-  ws.onclose = function (event) {
-    console.log('Socket is closed. Reconnect will be attempted in 1 second.', event.reason)
-    setTimeout(function () {
-      wsConnect()
-    }, 1000)
+  socket.onmessage = (event) => {
+    console.log('Mensagem recebida do servidor:', event.data)
+    callback()
   }
 
-  ws.onerror = function(event) {
-    console.error('Socket encountered error: ', event.message, 'Closing socket')
-    ws.close()
+  socket.onclose = () => {
+    console.log('Conexão fechada com o servidor. Tentando reconectar...')
+    reconnect()
   }
+
+  socket.onerror = (error) => {
+    console.error('Erro na conexão WebSocket:', error)
+  }
+
+  socket.onping = () => {
+    socket.pong()
+    callback() 
+  }
+}
+
+const reconnect = () => {
+  setTimeout(() => {
+    wsConnect()
+  }, 5000)
 }

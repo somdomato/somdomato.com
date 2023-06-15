@@ -28,7 +28,6 @@ function muteHandle() {
     volumeperc.value.style.width = '0%'
   } else {
     volumeperc.value.style.width = (oldVol.value * 100) + '%'
-    console.log(oldVol.value)
   }
   volumeIcon.value = audio.value.muted ? 'ph:speaker-simple-x-fill' : 'ph:speaker-simple-high-fill'
 }
