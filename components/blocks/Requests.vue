@@ -9,9 +9,9 @@ defineProps({ songs: Object })
         <table class="table table-dark table-sm">
           <tbody>
             <template v-if="songs">
-              <tr v-for="hist in songs">
+              <tr v-for="req in songs">
                 <!-- <th scope="row">{{ hist.song.id }}</th> -->
-                <td>{{ hist.song.artist }} - {{ hist.song.title }}</td>
+                <td>{{ req.song.artist }} - {{ req.song.title }}</td>
               </tr>
             </template>
             <template v-else>

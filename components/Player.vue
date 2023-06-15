@@ -53,18 +53,18 @@ async function cycleStreamAndPlay() {
   playPauseIcon.value = 'ph:pause-fill'
 }
 
-async function refreshData(event) {
+async function refreshData() {
   title.value = await useIcecastStats()
   const history = await useGetQueue(`${config.public.apiBase}/historico`)
   const requests = await useGetQueue(`${config.public.apiBase}/pedidos`)
   useState('lastSongs', () => history)
   useState('lastRequests', () => requests)
-  console.log('WebSockets Received: %s', event.data)
 }
 
 onMounted(() => {
   cycleStream()
   audio.value.onpause = _ => cycleStream()
+  refreshData()
   wsConnect(config.public.wssBase, refreshData)
 })
 </script>

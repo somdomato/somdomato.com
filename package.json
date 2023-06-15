@@ -9,7 +9,6 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@nuxt/devtools": "latest",
     "@types/bootstrap": "^5.2.6",
     "@types/node": "^18.0.0",
     "nuxt": "^3.5.2",
@@ -19,8 +18,6 @@
   "dependencies": {
     "@nuxtjs/google-fonts": "^3.0.1",
     "@popperjs/core": "^2.11.8",
-    "@sweetalert2/theme-dark": "^5.0.15",
-    "bootstrap": "^5.3.0",
-    "sweetalert2": "^11.7.11"
+    "bootstrap": "^5.3.0"
   }
 }
