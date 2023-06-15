@@ -31,7 +31,7 @@ async function doSearch() {
 }
 </script>
 <template>
-  <div class="col-12 order-4">
+  <div class="col-12 order-4 mb-3">
     <div class="bg-dark rounded-2 p-2 h-100">
       <h2>Pedidos</h2>
       <form class="d-flex" role="search" @submit.prevent="doSearch">

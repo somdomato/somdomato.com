@@ -8,7 +8,7 @@ const lastRequests = useState('lastRequests')
     <Chat />
     <blocks-requests :songs="lastRequests" />
   </div>
-  <div class="row">
+  <div class="row g-0 g-md-3">
     <Requests />
   </div>
 </template>

@@ -2,7 +2,7 @@
 defineProps({ songs: Object })
 </script>
 <template>
-  <div class="col-12 col-md-2 order-2 order-md-1">
+  <div class="col-12 col-md-2 order-2 order-md-1 mb-3">
     <div class="bg-dark rounded-2 p-2">
       <h4>Últimas</h4>
       <div class="table-responsive">
