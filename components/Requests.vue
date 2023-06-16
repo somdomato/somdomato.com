@@ -1,19 +1,47 @@
 <script setup>
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 const searchResults = ref([])
 const searchTotal = ref(0)
-const swal = inject('$swal')
 const search = useState('search')
+
+const toastOptions = {
+  position: "bottom-center",
+  timeout: 5000,
+  closeOnClick: true,
+  pauseOnFocusLoss: true,
+  pauseOnHover: true,
+  draggable: true,
+  draggablePercent: 0.6,
+  showCloseButtonOnHover: false,
+  hideProgressBar: true,
+  closeButton: "button",
+  icon: true,
+  rtl: false
+}
 
 async function doRequest(id) {
   const { data } = await useFetch(`http://localhost:4000/req/${id}`)
   const { status, message } = toRaw(data.value)
 
-  swal.fire({
-    title: status == 'success' ? 'Sucesso!' : 'Erro!',
-    text: message,
-    icon: status,
-    confirmButtonText: 'Fechar'
-  })
+  switch (status) {
+    case 'success':
+      toast.success(message, toastOptions)      
+      break;  
+    case 'warning':
+      toast.warning(message, toastOptions)      
+      break;  
+    case 'info':
+      toast.info(message, toastOptions)      
+      break;  
+    case 'error':
+      toast.error(message, toastOptions)      
+      break;  
+    default:
+      toast.error(message, toastOptions)
+      break;
+  }
 
   searchResults.value = []
 }
@@ -22,9 +50,6 @@ async function doSearch() {
   if (search.value !== '' && search.value.length > 3) {
     const { data } = await useFetch(`http://localhost:4000/song/?q=${search.value}`)
     const { songs } = toRaw(data.value)
-
-    console.log(songs.data)
-
     searchResults.value = songs.data
     searchTotal.value = songs.total
   }
@@ -60,8 +85,6 @@ async function doSearch() {
   </div>
 </template>
 <style lang="scss" scoped>
-@import "~~/@sweetalert2/theme-dark/dark.scss";
-
 input,
 input:focus {
   border: 2px solid rgba(255, 255, 255, 0.25);
