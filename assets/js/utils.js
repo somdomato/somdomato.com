@@ -9,7 +9,7 @@ export const wsConnect = (url, callback) => {
 
   socket.onerror = (error) => {
     console.error('WS: Erro na conexão WebSocket:', error)
-    socket.terminate()
+    // socket.terminate()
   }
 
   socket.onmessage = (event) => {

@@ -1,25 +1,10 @@
 <script setup>
-import { useToast } from 'vue-toastification'
-
-const toast = useToast()
+const { $toast } = useNuxtApp()
 const searchResults = ref([])
 const searchTotal = ref(0)
 const search = useState('search')
 
-const toastOptions = {
-  position: "bottom-center",
-  timeout: 5000,
-  closeOnClick: true,
-  pauseOnFocusLoss: true,
-  pauseOnHover: true,
-  draggable: true,
-  draggablePercent: 0.6,
-  showCloseButtonOnHover: false,
-  hideProgressBar: true,
-  closeButton: "button",
-  icon: true,
-  rtl: false
-}
+
 
 async function doRequest(id) {
   const { data } = await useFetch(`http://localhost:4000/req/${id}`)
@@ -27,19 +12,19 @@ async function doRequest(id) {
 
   switch (status) {
     case 'success':
-      toast.success(message, toastOptions)      
+      $toast.success(message)      
       break;  
     case 'warning':
-      toast.warning(message, toastOptions)      
+      $toast.warning(message)      
       break;  
     case 'info':
-      toast.info(message, toastOptions)      
+      $toast.info(message)      
       break;  
     case 'error':
-      toast.error(message, toastOptions)      
+      $toast.error(message)      
       break;  
     default:
-      toast.error(message, toastOptions)
+      $toast.error(message)
       break;
   }
 
