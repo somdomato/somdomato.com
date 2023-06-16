@@ -1,13 +1,14 @@
 <script setup>
+const config = useRuntimeConfig()
 const { $toast } = useNuxtApp()
 const searchResults = ref([])
 const searchTotal = ref(0)
-const search = useState('search')
+const search = ref('')
 
-
-
-async function doRequest(id) {
-  const { data } = await useFetch(`http://localhost:4000/req/${id}`)
+async function doRequest(id, evt) {
+  console.log(evt)
+  
+  const { data } = await useFetch(`${config.public.apiBase}/pedido/${id}`)
   const { status, message } = toRaw(data.value)
 
   switch (status) {
@@ -28,12 +29,12 @@ async function doRequest(id) {
       break;
   }
 
-  searchResults.value = []
+  // searchResults.value = []
 }
 
 async function doSearch() {
   if (search.value !== '' && search.value.length > 3) {
-    const { data } = await useFetch(`http://localhost:4000/song/?q=${search.value}`)
+    const { data } = await useFetch(`${config.public.apiBase}/musica/?q=${search.value}`)
     const { songs } = toRaw(data.value)
     searchResults.value = songs.data
     searchTotal.value = songs.total
@@ -60,7 +61,7 @@ async function doSearch() {
             <td>{{ item.artist }}</td>
             <td>{{ item.title }}</td>
             <td>
-              <button type="button" class="btn btn-success btn-sm" @click="doRequest(item.id)">Pedir</button>
+              <button type="button" class="btn btn-success btn-sm" @click="doRequest(item.id, $event)">Pedir</button>
             </td>
           </tr>
         </tbody>
