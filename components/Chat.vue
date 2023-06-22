@@ -1,6 +1,6 @@
 <template>
-  <div class="col-12 col-md-8 order-first order-md-2 mb-3 mb-md-0" style="min-height: 500px;">
-    <div class="bg-dark rounded-2 p-2 h-100">
+  <div class="col-12 col-md-8 order-first order-md-2 mb-md-0 d-flex flex-column flex-fill">
+    <div class="bg-dark rounded-2 p-2 bg-warning d-flex flex-column flex-fill">
       <h4>Chat</h4>
       <iframe src="https://chat.somdomato.com" frameborder="0" allowfullscreen></iframe>
     </div>
@@ -10,6 +10,8 @@
 iframe {
   box-sizing: border-box;
   width: 100%;
-  height: calc(100% - 50px);
+  min-height: 500px;
+  height: 100%;  
+  /* height: calc(100% - 50px); */
 }
 </style>

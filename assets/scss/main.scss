@@ -20,48 +20,7 @@ body {
   background-size: cover;  
 }
 
-main > .container {
-  padding: 62px 15px 0;
-}
-
-.nuxt-icon {
-  font-size: 1.3em;
-}
-
-// X-Small devices (portrait phones, less than 576px)
-// No media query for `xs` since this is the default in Bootstrap
-
-// Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) {
-  main > .container {
-    padding: 62px 15px 0;
-  }
-}
-
-// Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {
-  main > .container {
-    padding: 62px 15px 0;
-  }
-}
-
-// Large devices (desktops, 992px and up)
-@media (min-width: 992px) {
-  main > .container {
-    padding: 62px 15px 0;
-  }
-}
-
-// X-Large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) {
-  main > .container {
-    padding: 62px 15px 0;
-  }
-}
-
-// XX-Large devices (larger desktops, 1400px and up)
-@media (min-width: 1400px) {
-  main > .container {
-    padding: 62px 15px 0;
-  }
-}
+main > .container:first-child { padding-top: 62px; }
+main > .container:last-child { padding-bottom: 68px; }
+input { font-size: 16px; }
+.nuxt-icon { font-size: 1.3em; }

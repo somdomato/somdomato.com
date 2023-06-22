@@ -1,9 +1,7 @@
 <template>
   <Header />
-  <main>
-    <div class="container px-0 px-md-3">
-      <slot />
-    </div>
+  <main class="d-flex flex-column flex-grow-1">
+    <slot />
   </main>
   <Footer />
 </template>

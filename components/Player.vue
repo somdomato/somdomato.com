@@ -69,15 +69,15 @@ onMounted(() => {
 })
 </script>
 <template>
-  <ul class="navbar-nav ms-auto mb-2 mb-md-0">
-    <li class="nav-item d-flex align-items-center">
+  <ul class="navbar-nav mb-2 mb-md-0">
+    <li class="nav-item d-flex align-items-center mx-auto">
       <div class="wrapper">
         <div class="title">
           {{ title }}
         </div>
       </div>
     </li>
-    <li class="nav-item">
+    <li class="nav-item mx-auto">
       <div class="player-container">
         <audio ref="audio">
           <source src="https://radio.somdomato.com/principal" type="audio/mp3" />
@@ -97,7 +97,7 @@ onMounted(() => {
               <Icon :name="volumeIcon" @click="muteHandle" />
             </div>
 
-            <div ref="volumeslider" class="volume-slider" @click="volumeHandle">
+            <div ref="volumeslider" class="volume-slider d-none d-md-block" @click="volumeHandle">
               <div ref="volumeperc" class="volume-percentage"></div>
             </div>
           </div>

@@ -3,12 +3,15 @@ const lastSongs = useState('lastSongs')
 const lastRequests = useState('lastRequests')
 </script>
 <template>
-  <div class="row my-3" style="min-height: 500px;">
+  <Row>
+    <Carousel />
+  </Row>
+  <Row container-class="flex-grow-1 mb-3">
     <blocks-last :songs="lastSongs" />
     <Chat />
     <blocks-requests :songs="lastRequests" />
-  </div>
-  <div class="row g-0 g-md-3">
+  </Row>
+  <Row>
     <Requests />
-  </div>
+  </Row>
 </template>

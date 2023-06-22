@@ -2,15 +2,14 @@
 defineProps({ songs: Object })
 </script>
 <template>
-  <div class="col-12 col-md-2 order-3">
-    <div class="bg-dark rounded-2 p-2">
+  <div class="col-12 col-md-2 order-3 d-flex flex-column flex-fill">
+    <div class="bg-dark rounded-2 p-2 d-flex flex-column flex-fill">
       <h4>Próximas</h4>
       <div class="table-responsive">
         <table class="table table-dark table-sm">
           <tbody>
             <template v-if="songs">
               <tr v-for="req in songs">
-                <!-- <th scope="row">{{ hist.song.id }}</th> -->
                 <td>{{ req.song.artist }} - {{ req.song.title }}</td>
               </tr>
             </template>

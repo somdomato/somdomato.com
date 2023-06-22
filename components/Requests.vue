@@ -51,8 +51,8 @@ async function fetchSongs(pageNumber) {
 watch(currentPage, fetchSongs)
 </script>
 <template>
-  <div class="col-12 order-4 mb-3">
-    <div class="bg-dark rounded-2 p-2 h-100">
+  <div class="col-12 order-4">
+    <div class="bg-dark rounded-2 p-2">
       <h2>Pedidos</h2>
       <form class="d-flex" role="search" @submit.prevent="fetchSongs()">
         <div class="input-group input-group mb-3">
