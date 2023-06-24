@@ -1,44 +1,66 @@
 <template>
   <ul class="navbar-nav me-auto mb-2 mb-md-0">
     <li class="nav-item">
-      <NuxtLink class="nav-link active" to="/">Início</NuxtLink>
+      <NuxtLink class="nav-link" to="/">Início</NuxtLink>
     </li>
     <li class="nav-item">
-      <div class="d-flex w-auto">
-        <a class="nav-link me-2 me-md-0" href="https://somdomato.com/facebook" target="_blank">
-          <Icon name="devicon:facebook" font-size="20" />
-        </a>
-        <a class="nav-link me-2 me-md-0" href="https://somdomato.com/twitter" target="_blank">
-          <Icon name="devicon:twitter" font-size="20" />
-        </a>
-        <a class="nav-link" href="https://somdomato.com/telegram" target="_blank">
-          <Icon name="logos:telegram" font-size="20" />
-        </a>
-      </div>
+      <NuxtLink class="nav-link" to="/artistas">Artistas</NuxtLink>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown" data-bs-theme="dark">
       <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <Icon name="fxemoji:guitar" font-size="20" /> Estilo
+        Redes
       </a>
       <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">
+        <li>
+          <a class="dropdown-item" href="https://somdomato.com/facebook" target="_blank">
+            <Icon name="logos:facebook" font-size="16" /> Facebook
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="https://somdomato.com/instagram" target="_blank">
+            <Icon name="skill-icons:instagram" font-size="16" /> Instagram
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="https://somdomato.com/twitter" target="_blank">
+            <Icon name="logos:twitter" font-size="16" /> Twitter
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="nav-item dropdown" data-bs-theme="dark">
+      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Estilo
+      </a>
+      <ul class="dropdown-menu">
+        <li>
+          <a class="dropdown-item" href="#">
             <Icon name="fxemoji:guitar" font-size="16" /> Geral
-          </a></li>
+          </a>
+        </li>
         <li>
           <hr class="dropdown-divider">
         </li>
-        <li><a class="dropdown-item" href="#">
+        <li>
+          <a class="dropdown-item" href="#">
             <Icon name="fxemoji:guitar" font-size="16" /> Universitário
-          </a></li>
-        <li><a class="dropdown-item" href="#">
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">
             <Icon name="fxemoji:guitar" font-size="16" /> Romântico
-          </a></li>
-        <li><a class="dropdown-item" href="#">
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">
             <Icon name="fxemoji:guitar" font-size="16" /> Modão
-          </a></li>
+          </a>
+        </li>
         <li><a class="dropdown-item" href="#">
             <Icon name="fxemoji:guitar" font-size="16" /> Gaúcha
-          </a></li>
+          </a>
+        </li>
       </ul>
     </li>
   </ul>

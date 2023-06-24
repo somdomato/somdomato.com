@@ -35,6 +35,7 @@ jobs:
           script: |
             cd ${{ secrets.PROJECT_PATH }}
             [ -f .env ] || cp .env.production .env
+            [ ! -L public/img/covers ] || ln -s /media/covers public/img/covers
             pnpm install
             pnpm run clean
             pnpm run build

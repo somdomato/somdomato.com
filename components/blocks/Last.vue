@@ -1,22 +1,18 @@
 <script setup>
-defineProps({ songs: Object })
+const lastSongs = useState('lastSongs')
 </script>
 <template>
-  <div class="col-12 col-md-2 order-2 order-md-1 d-flex flex-column flex-fill">
-    <div class="bg-dark rounded-2 p-2 d-flex flex-column flex-fill">
-      <h4>Últimas</h4>
-      <div class="table-responsive">
-        <table class="table table-dark table-sm">
-          <tbody>
-            <tr v-for="hist in songs">
-              <td class="text-truncate" style="max-width: 100%;">
-                {{ hist.song.artist }} - {{ hist.song.title }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  <h4>Últimas</h4>
+  <div class="table-responsive">
+    <table class="table table-dark table-sm">
+      <tbody>
+        <tr v-for="hist in lastSongs">
+          <td class="text-truncate" style="max-width: 100%;">
+            {{ hist.song.artist.name }} - {{ hist.song.title }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 <style scoped>

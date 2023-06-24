@@ -1,15 +1,17 @@
 <script setup>
-import { wsConnect } from '~/assets/js/utils'
+import { wsConnect, fetchCover } from '~/assets/js/utils'
 
+const info = useInfoStore()
 const config = useRuntimeConfig()
+
 const title = ref('Rádio Som do Mato')
+const cover = ref('/img/cover.svg')
 const audio = ref(null)
 const volumeperc = ref(null)
 const oldVol = ref(1)
 const playPauseIcon = ref('ph:play-fill')
 const volumeIcon = ref('ph:speaker-simple-high-fill')
 const props = defineProps({ stream: { type: String, default: 'https://radio.somdomato.com/principal' } })
-const emit = defineEmits({ isMobile: { type: Boolean, default: false } })
 
 function playHandle() {
   if (audio.value.paused) {
@@ -41,7 +43,8 @@ function volumeHandle(event) {
 }
 
 async function cycleStream() {
-  title.value = await useIcecastStats()
+  const icecastData = await useIcecastStats()
+  title.value = `${icecastData.artist} - ${icecastData.title}`
   audio.value.firstChild.src = props.stream + '?ts=' + ~~(Date.now() / 1000)
   audio.value.load()
   playPauseIcon.value = 'ph:play-fill'
@@ -53,25 +56,45 @@ async function cycleStreamAndPlay() {
   playPauseIcon.value = 'ph:pause-fill'
 }
 
+function setCover(cover) {
+  return cover
+}
+
 async function refreshData() {
-  title.value = await useIcecastStats()
+  const icecastData = await useIcecastStats()
+  title.value = `${icecastData.artist} - ${icecastData.title}`
   const history = await useGetQueue(`${config.public.apiBase}/historico`)
   const requests = await useGetQueue(`${config.public.apiBase}/pedidos`)
   useState('lastSongs', () => history)
   useState('lastRequests', () => requests)
+
+  info.artist = icecastData.artist
+  info.title = icecastData.title
+  info.cover = await fetchCover(icecastData.artist)
+
+  // cover.value = history[0].song.cover
+  cover.value = info.cover
+
+  // const encodedTitle = encodeURIComponent(`Ouça agora: ${title.value}\n\nNa Rádio Som do Mato!\n\nhttps://somdomato.com`)
+  // const whatsappLink = `https://wa.me/?text=${encodedTitle}`
+  // const facebookLink = `<em>${title.value}</em>`
+  // const twitterLink = `<em>${title.value}</em>`
+  // const shareLinks = `Teste`
 }
 
 onMounted(() => {
   cycleStream()
   audio.value.onpause = _ => cycleStream()
-  refreshData()
   wsConnect(config.public.wssBase, refreshData)
+  refreshData()
 })
 </script>
 <template>
   <ul class="navbar-nav mb-2 mb-md-0">
     <li class="nav-item d-flex align-items-center mx-auto">
-      <div class="wrapper">
+      <Cover :image="cover" />
+
+      <div class="wrapper ms-2">
         <div class="title">
           {{ title }}
         </div>
@@ -84,11 +107,11 @@ onMounted(() => {
         </audio>
 
         <div class="controls">
-          <div class="play-container">
-            <Icon :name="playPauseIcon" @click.prevent="playHandle()" />
+          <div>
+            <Icon :name="playPauseIcon" @click.prevent="playHandle" />
           </div>
 
-          <div class="cycle-container">
+          <div>
             <Icon name="ph:recycle-bold" @click="cycleStreamAndPlay" />
           </div>
 

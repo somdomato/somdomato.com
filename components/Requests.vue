@@ -10,7 +10,7 @@ const totalPages = ref(0);
 const songsResult = ref([]);
 
 async function doRequest(id, evt) {
-  console.log(evt)
+  // console.info(evt)
 
   const { data } = await useFetch(`${config.public.apiBase}/pedido/${id}`)
   const { status, message } = toRaw(data.value)
@@ -66,8 +66,9 @@ watch(currentPage, fetchSongs)
       <table class="table table-borderless table-dark">
         <tbody>
           <tr v-for="(item, index) in songsResult">
-            <th scope="row">{{ index + 1 }}</th>
-            <td>{{ item.artist }}</td>
+            <!-- <th scope="row">{{ index + 1 }}</th> -->
+            <th scope="row">{{ (currentPage - 1) * pageSize + index + 1 }}</th>
+            <td>{{ item.artist.name }}</td>
             <td>{{ item.title }}</td>
             <td>
               <button type="submit" class="btn btn-success btn-sm" @click="doRequest(item.id, $event)">Pedir</button>

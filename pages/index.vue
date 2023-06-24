@@ -1,15 +1,16 @@
-<script setup>
-const lastSongs = useState('lastSongs')
-const lastRequests = useState('lastRequests')
-</script>
 <template>
   <Row>
     <Carousel />
   </Row>
   <Row container-class="flex-grow-1 mb-3">
-    <blocks-last :songs="lastSongs" />
+    <Sidebar css-classes="order-1 order-md-first">
+      <blocks-last />
+    </Sidebar>
     <Chat />
-    <blocks-requests :songs="lastRequests" />
+    <Sidebar css-classes="order-2">
+      <blocks-requests />
+      <blocks-artist />
+    </Sidebar>
   </Row>
   <Row>
     <Requests />

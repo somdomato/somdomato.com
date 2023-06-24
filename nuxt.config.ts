@@ -1,11 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  alias: {
-    '~~': './node_modules/',
+  imports: {
+    dirs: ['stores']
   },
+  alias: { '~~': './node_modules/' },
   devtools: { enabled: false },
   css: ['~/assets/scss/main.scss'],
-  modules: ['@nuxtjs/google-fonts', 'nuxt-icon'],
+  modules: [
+    [
+      '@pinia/nuxt',
+      { autoImports: ['defineStore', 'acceptHMRUpdate'] },
+    ], 
+    '@nuxtjs/google-fonts', 
+    'nuxt-icon'
+  ],
   googleFonts: {
     families: {
       Nunito: true
