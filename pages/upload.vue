@@ -1,15 +1,23 @@
 <script setup>
 const config = useRuntimeConfig()
 const url = ref(null)
-const genre = ref('geral')
+const genre = ref('Geral')
 const loading = ref(false)
 const status = ref('')
 
-const onSelectChange = (e) => {
-  genre.value = e.target.value
+const genreOptions = computed(() => {
+  return ['Geral', 'Universitário', 'Modão']
+})
+
+const onSelectChange = () => {
+  if (genre.value === 'Outro') {
+    console.log('Opção personalizada selecionada:', genre.value)
+  } else {
+    console.log('Opção selecionada:', genre.value);
+  }
 }
 
-async function handleSubmit() {
+const handleSubmit = async () => {
   loading.value = true
   const payload = { url: url.value, genre: genre.value }
 
@@ -26,6 +34,17 @@ async function handleSubmit() {
     status.value = response.value.message
   }
 }
+
+const handleSelectChange = () => {
+
+}
+
+// computed: {
+//     options() {
+//       // Opções do dropdown
+//       return ['Opção 1', 'Opção 2'];
+//     }
+//   },
 </script>
 <template>
   <Row container-class="flex-grow-1 mb-3">
@@ -39,41 +58,33 @@ async function handleSubmit() {
         </div>
         <div class="mb-3">
           <div class="row">
-            <div class="col">
+            <div class="col-12 col-md-8">
               <label for="url" class="form-label">Link do Youtube</label>
-              <input v-model="url" type="url" class="form-control shadow-none border-0 bg-secondary" id="url"
+              <input v-model="url" type="url" class="form-control shadow-none border-2 border-secondary" id="url"
                 aria-describedby="urlHelp" data-bs-theme="dark">
               <div id="urlHelp" class="form-text text-secondary">
                 Digite uma URL do Youtube, no formato: https://www.youtube.com/watch?v=DoBRdWugGoY<br />
               </div>
+              <button class="btn btn-secondary" type="button" @click="handleSubmit" :disabled="loading">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loading"></span>
+                <span class="loading" v-if="loading">Enviando</span>
+                <span v-if="!loading">Enviar</span>
+              </button>
             </div>
-            <div class="col-auto">
+            <div class="col-12 col-md-4">
               <label for="estilo" class="form-label">Estilo</label>
-              <select name="genre" @change="onSelectChange(e)" v-model="genre" id="estilo"
-                class="form-select shadow-none border-0 bg-secondary" aria-label="Selecione o estilo musical"
-                data-bs-theme="dark">
-                <option value="geral" selected>Geral</option>
-                <option value="uni">Universitário</option>
-                <option value="modao">Modão</option>
+              <select id="estilo" class="form-select shadow-none border-2 border-secondary" v-model="genre" @change="onSelectChange" data-bs-theme="dark">
+                <option v-for="option in genreOptions" :key="option" :value="option.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')">{{ option }}</option>
+                <option value="Outro">Outro</option>
               </select>
+              <input v-if="genre === 'Outro'" v-model="customOption" type="text" class="form-control mt-2" placeholder="Digite o nome do diretório" data-bs-theme="dark">
             </div>
           </div>
-          <button class="btn btn-secondary" type="button" @click="handleSubmit" :disabled="loading">
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loading"></span>
-            <span class="loading" v-if="loading">
-              Enviando
-            </span>
-            <span v-if="!loading">
-              Enviar
-            </span>
-          </button>
         </div>
-
         <div class="alert alert-dark align-items-center" role="alert" v-if="status">
           <h5>Status</h5>
           <p>{{ status }}</p>
         </div>
-
       </div>
     </div>
   </Row>
@@ -85,6 +96,7 @@ async function handleSubmit() {
 }
 
 @keyframes dots {
+
   0%,
   20% {
     color: rgba(0, 0, 0, 0);
@@ -92,15 +104,18 @@ async function handleSubmit() {
       .25em 0 0 rgba(0, 0, 0, 0),
       .5em 0 0 rgba(0, 0, 0, 0);
   }
+
   40% {
     color: white;
     text-shadow:
       .25em 0 0 rgba(0, 0, 0, 0),
       .5em 0 0 rgba(0, 0, 0, 0);
   }
+
   60% {
     text-shadow: .25em 0 0 white, .5em 0 0 rgba(0, 0, 0, 0);
   }
+
   80%,
   100% {
     text-shadow: .25em 0 0 white, .5em 0 0 white;
