@@ -17,15 +17,15 @@
     <div class="carousel-inner rounded">
       <div class="carousel-item active">
         <img src="/img/banner/felipe_e_rodrigo.jpg" class="d-block w-100" alt="Gusttavo Lima">
-        <img src="/img/cover.png" class="carousel-logo" alt="Rádio Som do Mato">
+        <img src="/img/media/cover.png" class="carousel-logo" alt="Rádio Som do Mato">
       </div>
       <div class="carousel-item">
         <img src="/img/banner/gusttavo_lima.jpg" class="d-block w-100" alt="...">
-        <img src="/img/cover.png" class="carousel-logo" alt="Rádio Som do Mato">
+        <img src="/img/media/cover.png" class="carousel-logo" alt="Rádio Som do Mato">
       </div>
       <div class="carousel-item">
         <img src="/img/banner/ze_neto_e_cristiano.jpg" class="d-block w-100" alt="Gusttavo Lima">
-        <img src="/img/cover.png" class="carousel-logo" alt="Rádio Som do Mato">
+        <img src="/img/media/cover.png" class="carousel-logo" alt="Rádio Som do Mato">
       </div>
     </div>
   </div>

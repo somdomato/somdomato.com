@@ -12,9 +12,9 @@
 			},
 			"presentation": {
 				"reveal": "never",
-				"panel": "shared",
+				"panel": "dedicated",
 				"showReuseMessage": false,
-				"clear": true
+				"clear": false
 			}
 		}
 	]

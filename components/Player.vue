@@ -5,8 +5,9 @@ const info = useInfoStore()
 const config = useRuntimeConfig()
 
 const title = ref('Rádio Som do Mato')
-const cover = ref('/img/cover.svg')
+const cover = ref('/img/media/cover.svg')
 const audio = ref(null)
+const muted = ref(true)
 const volumeperc = ref(null)
 const oldVol = ref(1)
 const playPauseIcon = ref('ph:play-fill')
@@ -17,9 +18,11 @@ function playHandle() {
   if (audio.value.paused) {
     playPauseIcon.value = 'ph:pause-fill'
     audio.value.play()
+    muted.value = false
   } else {
     playPauseIcon.value = 'ph:play-fill'
     audio.value.pause()
+    muted.value = true
   }
 }
 
@@ -32,6 +35,7 @@ function muteHandle() {
     volumeperc.value.style.width = (oldVol.value * 100) + '%'
   }
   volumeIcon.value = audio.value.muted ? 'ph:speaker-simple-x-fill' : 'ph:speaker-simple-high-fill'
+
 }
 
 function volumeHandle(event) {
@@ -56,23 +60,19 @@ async function cycleStreamAndPlay() {
   playPauseIcon.value = 'ph:pause-fill'
 }
 
-function setCover(cover) {
-  return cover
-}
-
 async function refreshData() {
   const icecastData = await useIcecastStats()
   title.value = `${icecastData.artist} - ${icecastData.title}`
+  const top = await useGetQueue(`${config.public.apiBase}/top`)
   const history = await useGetQueue(`${config.public.apiBase}/historico`)
   const requests = await useGetQueue(`${config.public.apiBase}/pedidos`)
   useState('lastSongs', () => history)
   useState('lastRequests', () => requests)
+  useState('topSongs', () => top)
 
   info.artist = icecastData.artist
   info.title = icecastData.title
   info.cover = await fetchCover(icecastData.artist)
-
-  // cover.value = history[0].song.cover
   cover.value = info.cover
 
   // const encodedTitle = encodeURIComponent(`Ouça agora: ${title.value}\n\nNa Rádio Som do Mato!\n\nhttps://somdomato.com`)
@@ -80,6 +80,47 @@ async function refreshData() {
   // const facebookLink = `<em>${title.value}</em>`
   // const twitterLink = `<em>${title.value}</em>`
   // const shareLinks = `Teste`
+
+
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: info.title,
+      artist: info.artist,
+      album: "Rádio Som do Mato",
+      artwork: [
+        {
+          src: "/img/media/cover-96x96.png",
+          sizes: "96x96",
+          type: "image/png",
+        },
+        {
+          src: "/img/media/cover-128x128.png",
+          sizes: "128x128",
+          type: "image/png",
+        },
+        {
+          src: "/img/media/cover-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "/img/media/cover-256x256.png",
+          sizes: "256x256",
+          type: "image/png",
+        },
+        {
+          src: "/img/media/cover-384x384.png",
+          sizes: "384x384",
+          type: "image/png",
+        },
+        {
+          src: "/img/media/cover-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        }
+      ]
+    })
+  }
 }
 
 onMounted(() => {
@@ -92,7 +133,7 @@ onMounted(() => {
 <template>
   <ul class="navbar-nav mb-2 mb-md-0">
     <li class="nav-item d-flex align-items-center mx-auto">
-      <Cover :image="cover" />
+      <Cover :image="cover" :class="{'rotating': !muted }" />
 
       <div class="wrapper ms-2">
         <div class="title">
@@ -131,4 +172,40 @@ onMounted(() => {
 </template>
 <style scoped lang="scss">
 @import '~/assets/scss/player.scss';
+
+@-webkit-keyframes rotating { /* Safari and Chrome */
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+}
 </style>

@@ -16,6 +16,6 @@ onMounted(() => {
 <template>
   <div class="cover me-2">
     <img :src="image" class="rounded-circle" style="height: auto;" :style="{ width: imageSize + 'px' }" alt="Rádio Som do Mato" v-if="imageExists" />
-    <img src="/img/cover.svg" style="height: auto;" :style="{ width: imageSize + 'px' }" alt="Rádio Som do Mato" v-else />
+    <img src="/img/media/cover.svg" style="height: auto;" :style="{ width: imageSize + 'px' }" alt="Rádio Som do Mato" v-else />
   </div>
 </template>

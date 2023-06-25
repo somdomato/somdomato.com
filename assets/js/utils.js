@@ -43,19 +43,48 @@ const formatName = (coverName) => {
   return lowercase
 }
 
+// export const fetchCover = async (name) => {
+//   const defaultCover = '/img/media/cover.svg'
+
+//   try {
+//     const image_url = '/img/covers/' + formatName(name) + '.png';
+//     const response = await fetch(image_url)  
+//     console.info(response)  
+//     if (response.status === 200) return image_url
+//     return defaultCover
+//   } catch (error) {
+//     return defaultCover
+//   }
+// }
+
 export const fetchCover = async (name) => {
+  const defaultCover = '/img/media/cover.svg'
+  const image_url = '/img/covers/' + formatName(name) + '.png'
+
   try {
-    const image_url = '/img/covers/' + formatName(name) + '.png';
-    const response = await fetch(image_url);
-    
-    if (response.status === 200) {
-      return image_url; // Retorna a URL da imagem se ela existir
-    } 
-    // else {
-      // throw new Error('Image not found'); // Lança um erro se a imagem não existir
-    // }
+    const response = await fetch(image_url)
+    if (response.ok && response.headers.get('content-type') === 'image/png') {
+      return image_url
+    } else {
+      return defaultCover
+    }
   } catch (error) {
-    return '/img/cover.svg'; // Retorna a imagem padrão em caso de erro
+    return defaultCover
   }
 }
 
+export const fetchCoverSync = (name) => {
+  const defaultCover = '/img/media/cover.svg'
+  const image_url = '/img/covers/' + formatName(name) + '.png'
+
+  try {
+    const response = fetch(image_url)
+    if (response.ok && response.headers.get('content-type') === 'image/png') {
+      return image_url
+    } else {
+      return defaultCover
+    }
+  } catch (error) {
+    return defaultCover
+  }
+}

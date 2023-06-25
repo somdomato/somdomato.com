@@ -1,11 +1,13 @@
 <script setup>
 const currentPage = ref(1)
-const pageSize = ref(10)
 
 const emit = defineEmits(['page-changed'])
-const props = defineProps({ totalItems: { type: Number, default: 0 } })
+const props = defineProps({ 
+  totalItems: { type: Number, default: 0 },
+  pageSize: { type: Number, default: 20 } 
+})
 
-const totalPages = computed(() => Math.ceil(props.totalItems / pageSize.value))
+const totalPages = computed(() => Math.ceil(props.totalItems / props.pageSize))
 
 const visiblePageNumbers = computed(() => {
   const maxVisiblePages = 5;
@@ -34,6 +36,11 @@ function goToPage(pageNumber) {
 <template>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link disabled" href="#">
+            Página: {{ currentPage }} de {{ totalPages }}
+          </a>
+        </li>
         <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
           <a class="page-link shadow-none" href="#" aria-label="Previous" @click.prevent="goToPage(currentPage - 1)">
             <span aria-hidden="true">&laquo;</span>

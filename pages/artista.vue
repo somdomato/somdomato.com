@@ -1,5 +1,4 @@
 <script setup>
-import { fetchCoverSync } from '~/assets/js/utils'
 const config = useRuntimeConfig()
 // const route = useRoute()
 // console.log(route.params.id)
@@ -8,8 +7,6 @@ const totalArtists = ref(0)
 const currentPage = ref(1)
 const pageSize = ref(50)
 const totalPages = ref(0)
-
-const cover = async name => fetchCoverSync(name)
 
 async function fetchArtists(pageNumber = 1) {
   currentPage.value = pageNumber
@@ -31,9 +28,9 @@ onMounted(() => {
       <div class="bg-dark rounded-2 p-2 bg-warning d-flex flex-column flex-fill">
         <h4>Artistas</h4>
         <div class="row row-cols-1 row-cols-md-5 g-4 mb-2">
-          <template v-for="(item, index) in artistas">
+          <template v-for="artista in artistas">
             <div class="col">
-              <Card :id="item.id" :title="item.name" :body="item.name" :image="item['songs'][0]['cover']" />
+              <Card :id="artista.id" :title="artista['songs']" :body="artista.name" image="" />
             </div>
           </template>
         </div>

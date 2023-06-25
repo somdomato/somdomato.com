@@ -3,15 +3,13 @@ const config = useRuntimeConfig()
 const { $toast } = useNuxtApp()
 
 const search = ref('')
-const currentPage = ref(1);
-const pageSize = ref(10);
-const totalSongs = ref(0);
-const totalPages = ref(0);
-const songsResult = ref([]);
+const currentPage = ref(1)
+const pageSize = ref(10)
+const totalSongs = ref(0)
+const totalPages = ref(0)
+const songsResult = ref([])
 
 async function doRequest(id, evt) {
-  // console.info(evt)
-
   const { data } = await useFetch(`${config.public.apiBase}/pedido/${id}`)
   const { status, message } = toRaw(data.value)
 
