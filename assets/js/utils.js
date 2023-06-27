@@ -6,8 +6,8 @@ export const wsConnect = (url = 'wss://ws.somdomato.com', callback = null) => {
   }
 
   socket.onerror = (error) => {
-    // console.warn('WS: Erro na conexão WebSocket, fechamento forçado:', error)
-    socket.terminate()
+    console.error('WS: Erro na conexão WebSocket:', error)
+    // socket.terminate()
   }
 
   socket.onmessage = (event) => {

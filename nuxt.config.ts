@@ -29,7 +29,8 @@ export default defineNuxtConfig({
     public: {
       appBase: process.env.NUXT_PUBLIC_APP_BASE || "https://somdomato.com",
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "https://api.somdomato.com",
-      wssBase: process.env.NUXT_PUBLIC_WSS_BASE || "wss://ws.somdomato.com"
+      wssBase: process.env.NUXT_PUBLIC_WSS_BASE || "wss://ws.somdomato.com",
+      bgColor: process.env.NUXT_PUBLIC_BACKGROUND_COLOR || "#4C3D3D"
     }
   }
 })

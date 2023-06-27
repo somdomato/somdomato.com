@@ -13,14 +13,15 @@ body,
 
 body {
   font-family: 'Nunito', sans-serif;
-  background: linear-gradient(to bottom, rgba(56, 56, 56, 0.6) 0%,rgba(22, 22, 22, 0.6) 100%), url('/img/bg.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;  
+  background-image: url('/img/res/madeira.jpg');
+  background: url('/img/res/madeira.jpg') repeat #A4907C;
 }
 
 main > .container:first-child { padding-top: 62px; }
 main > .container:last-child { padding-bottom: 68px; }
 input { font-size: 16px; }
 .nuxt-icon { font-size: 1.3em; }
+
+.container-wide {
+  max-width: 1792px; /* 70% de 2560px */
+}

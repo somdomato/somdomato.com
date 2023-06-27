@@ -1,6 +1,6 @@
 <template>
   <div class="col-12 col-md-8 order-first order-md-1 mb-md-0 d-flex flex-column flex-fill">
-    <div class="bg-dark rounded-2 p-2 bg-warning d-flex flex-column flex-fill">
+    <div class="rounded-2 p-2 d-flex flex-column flex-fill" style="background-color: #4C3D3D">
       <h4>Chat</h4>
       <iframe src="https://chat.somdomato.com" frameborder="0" allowfullscreen></iframe>
     </div>

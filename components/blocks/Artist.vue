@@ -4,7 +4,7 @@ const info = useInfoStore()
 <template>
   <div>
     <h4>Artista</h4>
-    <div class="card">
+    <div class="card bg-dark">
       <img :src="info.cover" class="card-img-top" :alt="info.artist">
       <div class="card-body">
         <h5 class="card-title fs-5">{{ info.artist }}</h5>

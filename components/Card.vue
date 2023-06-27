@@ -7,7 +7,7 @@ defineProps({
 })
 </script>
 <template>
-  <div class="card h-100" style="max-width: 28rem;">
+  <div class="card h-100 bg-dark" style="max-width: 28rem;">
     <img :src="image" class="card-img-top" :alt="title">
     <div class="card-body">
       <h5 class="card-title fs-5">{{ title }}</h5>

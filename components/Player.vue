@@ -89,32 +89,32 @@ async function refreshData() {
       album: "Rádio Som do Mato",
       artwork: [
         {
-          src: "/img/media/cover-96x96.png",
+          src: `${config.public.appBase}/img/media/cover-96x96.png`,
           sizes: "96x96",
           type: "image/png",
         },
         {
-          src: "/img/media/cover-128x128.png",
+          src: `${config.public.appBase}/img/media/cover-128x128.png`,
           sizes: "128x128",
           type: "image/png",
         },
         {
-          src: "/img/media/cover-192x192.png",
+          src: `${config.public.appBase}/img/media/cover-192x192.png`,
           sizes: "192x192",
           type: "image/png",
         },
         {
-          src: "/img/media/cover-256x256.png",
+          src: `${config.public.appBase}/img/media/cover-256x256.png`,
           sizes: "256x256",
           type: "image/png",
         },
         {
-          src: "/img/media/cover-384x384.png",
+          src: `${config.public.appBase}/img/media/cover-384x384.png`,
           sizes: "384x384",
           type: "image/png",
         },
         {
-          src: "/img/media/cover-512x512.png",
+          src: `${config.public.appBase}/img/media/cover-512x512.png`,
           sizes: "512x512",
           type: "image/png",
         }
@@ -172,6 +172,11 @@ onMounted(() => {
 </template>
 <style scoped lang="scss">
 @import '~/assets/scss/player.scss';
+
+.inanimated {
+  animation-play-state: paused;
+  animation-fill-mode: backwards;
+}
 
 @-webkit-keyframes rotating { /* Safari and Chrome */
   from {

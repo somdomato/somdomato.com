@@ -1,7 +1,12 @@
+<script setup>
+defineProps({
+  bgColor: String
+})
+</script>
 <template>
   <header class="mb-3">
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark my-0 mb-3">
-      <div class="container">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top my-0 mb-3" :style="{backgroundColor: bgColor}">
+      <div class="container container-wide">
         <NuxtLink class="navbar-brand fs-4 d-flex align-items-center" to="/">
           <img src="/img/logotipo.svg" alt="Rádio Som do Mato" width="30" height="30" class="d-inline-block m-0 me-1" />
           Som do Mato

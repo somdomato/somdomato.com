@@ -50,7 +50,7 @@ watch(currentPage, fetchSongs)
 </script>
 <template>
   <div class="col-12 order-4">
-    <div class="bg-dark rounded-2 p-2">
+    <div class="rounded-2 p-2" style="background-color: #4C3D3D">
       <h2>Pedidos</h2>
       <form class="d-flex" role="search" @submit.prevent="fetchSongs()">
         <div class="input-group input-group mb-3">
