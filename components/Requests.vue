@@ -54,9 +54,7 @@ watch(currentPage, fetchSongs)
       <h2>Pedidos</h2>
       <form class="d-flex" role="search" @submit.prevent="fetchSongs()">
         <div class="input-group input-group mb-3">
-          <input ref="inputsearch" v-model="search" type="text" class="form-control bg-dark text-white"
-            placeholder="Música ou Artista" aria-label="Música ou Artista" aria-describedby="button-addon"
-            style="font-size: 16px;" />
+          <input ref="inputsearch" v-model="search" type="text" class="form-control bg-transparent text-white" placeholder="Música ou Artista" aria-label="Música ou Artista" aria-describedby="button-addon" style="font-size: 16px;" />
           <button class="btn btn-danger" type="reset" id="button-addon" @click="songsResult = []">Limpar</button>
           <button class="btn btn-primary" type="submit" id="button-addon">Pesquisar</button>
         </div>
@@ -64,7 +62,6 @@ watch(currentPage, fetchSongs)
       <table class="table table-borderless table-dark">
         <tbody>
           <tr v-for="(item, index) in songsResult">
-            <!-- <th scope="row">{{ index + 1 }}</th> -->
             <th scope="row">{{ (currentPage - 1) * pageSize + index + 1 }}</th>
             <td>{{ item.artist.name }}</td>
             <td>{{ item.title }}</td>
