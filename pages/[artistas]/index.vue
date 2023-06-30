@@ -28,10 +28,10 @@ onMounted(() => {
 <template>
   <Row container-class="flex-grow-1 mb-3">
     <div class="col-12 col-md-8 order-first order-md-1 mb-md-0 d-flex flex-column flex-fill">
-      <div class="rounded-2 p-2 d-flex flex-column flex-fill" :style="{ backgroundColor: config.public.bgColor }">
+      <div class="bg-dark rounded-2 p-2 d-flex flex-column flex-fill">
         <h4>Artistas</h4>
         <div class="row row-cols-1 row-cols-md-5 g-4 mb-2">
-          <template v-for="(item, index) in artistas">
+          <template v-for="item in artistas">
             <div class="col">
               <Card :id="item.id" :body="item.name" :image="item['songs'][0]['cover']" />
             </div>

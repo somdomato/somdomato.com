@@ -35,7 +35,6 @@ function muteHandle() {
     volumeperc.value.style.width = (oldVol.value * 100) + '%'
   }
   volumeIcon.value = audio.value.muted ? 'ph:speaker-simple-x-fill' : 'ph:speaker-simple-high-fill'
-
 }
 
 function volumeHandle(event) {
@@ -61,6 +60,8 @@ async function cycleStreamAndPlay() {
 }
 
 async function refreshData() {
+  if (audio.value.paused) cycleStream()
+
   const icecastData = await useIcecastStats()
   title.value = `${icecastData.artist} - ${icecastData.title}`
   const top = await useGetQueue(`${config.public.apiBase}/top`)
@@ -74,13 +75,6 @@ async function refreshData() {
   info.title = icecastData.title
   info.cover = await fetchCover(icecastData.artist)
   cover.value = info.cover
-
-  // const encodedTitle = encodeURIComponent(`Ouça agora: ${title.value}\n\nNa Rádio Som do Mato!\n\nhttps://somdomato.com`)
-  // const whatsappLink = `https://wa.me/?text=${encodedTitle}`
-  // const facebookLink = `<em>${title.value}</em>`
-  // const twitterLink = `<em>${title.value}</em>`
-  // const shareLinks = `Teste`
-
 
   if ("mediaSession" in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({

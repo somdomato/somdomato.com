@@ -2,7 +2,7 @@
 const topSongs = useState('topSongs')
 </script>
 <template>
-  <h4>Top 10</h4>
+  <h4>Mais Pedidas</h4>
   <div class="table-responsive">
     <table class="table table-dark table-sm">
       <tbody>

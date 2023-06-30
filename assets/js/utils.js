@@ -7,21 +7,17 @@ export const wsConnect = (url = 'wss://ws.somdomato.com', callback = null) => {
 
   socket.onerror = (error) => {
     console.error('WS: Erro na conexão WebSocket:', error)
-    // socket.terminate()
   }
 
   socket.onmessage = (event) => {
-    // console.info('WS: Mensagem recebida do servidor:', event.data)
     if (callback !== null) callback()
   }
 
   socket.onclose = () => {
-    // console.warn('WS: Conexão fechada com o servidor. Tentando reconectar...')
     wsReconnect(url)
   }
 
   socket.onping = () => {
-    console.info('WS: Ping do servidor')
     socket.pong()
     if (callback !== null) callback()
   }
@@ -42,20 +38,6 @@ const formatName = (coverName) => {
   const lowercase = alphanumeric.toLowerCase()
   return lowercase
 }
-
-// export const fetchCover = async (name) => {
-//   const defaultCover = '/img/media/cover.svg'
-
-//   try {
-//     const image_url = '/img/covers/' + formatName(name) + '.png';
-//     const response = await fetch(image_url)  
-//     console.info(response)  
-//     if (response.status === 200) return image_url
-//     return defaultCover
-//   } catch (error) {
-//     return defaultCover
-//   }
-// }
 
 export const fetchCover = async (name) => {
   const defaultCover = '/img/media/cover.svg'

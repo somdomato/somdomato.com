@@ -27,7 +27,7 @@ onMounted(() => {
 <template>
   <Row container-class="flex-grow-1 mb-3">
     <div class="col-12 col-md-8 order-first order-md-1 mb-md-0 d-flex flex-column flex-fill">
-      <div class="rounded-2 p-2 d-flex flex-column flex-fill" :style="{ backgroundColor: config.public.bgColor }">
+      <div class="bg-dark rounded-2 p-2 d-flex flex-column flex-fill">
         <h4>{{ artista }}</h4>
         <table class="table table-dark table-sm">
           <tbody>

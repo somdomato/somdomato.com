@@ -1,13 +1,17 @@
 <script setup>
 const config = useRuntimeConfig()
 const url = ref(null)
+
 const genre = ref('Geral')
+const customGenre = ref('')
+
+const subfolder = ref('uploads')
+const customFolder = ref('')
+
 const loading = ref(false)
 const status = ref('')
-
-const genreOptions = computed(() => {
-  return ['Geral', 'Universitário', 'Modão']
-})
+const artistFolders = ref(null)
+const genreOptions = computed(() => ['Geral', 'Universitário', 'Modão'])
 
 const onSelectChange = () => {
   if (genre.value === 'Outro') {
@@ -19,7 +23,12 @@ const onSelectChange = () => {
 
 const handleSubmit = async () => {
   loading.value = true
-  const payload = { url: url.value, genre: genre.value }
+  
+  const payload = { 
+    url: url.value, 
+    subfolder: subfolder.value === 'Outro' ? customFolder.value : subfolder.value,
+    genre: genre.value === 'Outro' ? customGenre.value : genre.value
+  }
 
   const { data: response } = await useFetch(`${config.public.apiBase}/upload`, {
     method: 'post',
@@ -27,24 +36,19 @@ const handleSubmit = async () => {
   })
 
   if (response) {
-    // const json = JSON.parse(response.value)
-    console.info(response)
-
     loading.value = false
     status.value = response.value.message
   }
 }
 
-const handleSelectChange = () => {
+onMounted(async () => {
+  const folders = await $fetch(`${config.public.apiBase}/upload`)
 
-}
-
-// computed: {
-//     options() {
-//       // Opções do dropdown
-//       return ['Opção 1', 'Opção 2'];
-//     }
-//   },
+  if (folders) {
+    console.info(folders.folders)
+    artistFolders.value = folders.folders
+  }
+})
 </script>
 <template>
   <Row container-class="flex-grow-1 mb-3">
@@ -57,11 +61,20 @@ const handleSelectChange = () => {
             Posteriormente o arquivo será incluído na rotação automática e sistema de pedidos da rádio.</p>
         </div>
         <div class="mb-3">
-          <div class="row">
-            <div class="col-12 col-md-8">
+          <div class="row justify-content-md-center">
+
+            <div class="col-12 col-md-auto">
+              <label for="estilo" class="form-label">Estilo</label>
+              <select id="estilo" class="form-select shadow-none border-2 border-secondary" v-model="genre" @change="onSelectChange" data-bs-theme="dark">
+                <option v-for="option in genreOptions" :key="option" :value="option.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')">{{ option }}</option>
+                <option value="Outro">Outro</option>
+              </select>
+              <input v-if="genre === 'Outro'" v-model="customGenre" type="text" class="form-control mt-2 shadow-none border-2 border-secondary" placeholder="Digite o nome do diretório" data-bs-theme="dark">
+            </div>
+
+            <div class="col-12 col-md-auto">
               <label for="url" class="form-label">Link do Youtube</label>
-              <input v-model="url" type="url" class="form-control shadow-none border-2 border-secondary" id="url"
-                aria-describedby="urlHelp" data-bs-theme="dark">
+              <input v-model="url" type="url" class="form-control shadow-none border-2 border-secondary" id="url" aria-describedby="urlHelp" data-bs-theme="dark">
               <div id="urlHelp" class="form-text text-secondary">
                 Digite uma URL do Youtube, no formato: https://www.youtube.com/watch?v=DoBRdWugGoY<br />
               </div>
@@ -71,14 +84,16 @@ const handleSelectChange = () => {
                 <span v-if="!loading">Enviar</span>
               </button>
             </div>
-            <div class="col-12 col-md-4">
-              <label for="estilo" class="form-label">Estilo</label>
-              <select id="estilo" class="form-select shadow-none border-2 border-secondary" v-model="genre" @change="onSelectChange" data-bs-theme="dark">
-                <option v-for="option in genreOptions" :key="option" :value="option.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')">{{ option }}</option>
+
+            <div class="col-12 col-md-auto">
+              <label for="estilo" class="form-label">Pasta</label>
+              <select id="estilo" class="form-select shadow-none border-2 border-secondary" v-model="subfolder" @change="onSelectChange" data-bs-theme="dark">
+                <option v-for="folder in artistFolders" :key="folder" :value="folder.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')">{{ folder.name.toLowerCase() }}</option>
                 <option value="Outro">Outro</option>
               </select>
-              <input v-if="genre === 'Outro'" v-model="customOption" type="text" class="form-control mt-2" placeholder="Digite o nome do diretório" data-bs-theme="dark">
+              <input v-if="subfolder === 'Outro'" v-model="customFolder" type="text" class="form-control mt-2 border-2 border-secondary shadow-none" placeholder="Digite o nome do diretório" data-bs-theme="dark">
             </div>
+
           </div>
         </div>
         <div class="alert alert-dark align-items-center" role="alert" v-if="status">

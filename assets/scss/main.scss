@@ -1,27 +1,5 @@
-@import 'bootstrap/scss/bootstrap';
-
-html,
-body,
-#__nuxt {
-  height: 100%;
-}
-
-#__nuxt {
-  display: flex;
-  flex-direction: column;
-}
-
-body {
-  font-family: 'Nunito', sans-serif;
-  background-image: url('/img/res/madeira.jpg');
-  background: url('/img/res/madeira.jpg') repeat #A4907C;
-}
-
-main > .container:first-child { padding-top: 62px; }
-main > .container:last-child { padding-bottom: 68px; }
-input { font-size: 16px; }
-.nuxt-icon { font-size: 1.3em; }
-
-.container-wide {
-  max-width: 1792px; /* 70% de 2560px */
-}
+@import 'utils/colors';
+@import 'bootstrap';
+@import 'themes/theme';
+@import 'base/base';
+// @import 'components/buttons';

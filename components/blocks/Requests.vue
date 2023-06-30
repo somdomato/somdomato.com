@@ -1,10 +1,8 @@
 <script setup>
 const lastRequests = useState('lastRequests')
-
-console.log(lastRequests)
 </script>
 <template>
-  <div v-if="lastRequests">
+  <div v-if="lastRequests && lastRequests[0]">
     <h4>Próximas</h4>
     <div class="table-responsive">
       <table class="table table-dark table-sm">
@@ -19,10 +17,3 @@ console.log(lastRequests)
     </div>
   </div>
 </template>
-<style scoped>
-.table-responsive table tbody tr th,
-.table-responsive table tbody tr td {
-  font-size: .8rem;
-  padding: .2rem;
-}
-</style>
