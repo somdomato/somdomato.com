@@ -28,8 +28,8 @@ const visiblePageNumbers = computed(() => {
 
 function goToPage(pageNumber) {
   if (pageNumber >= 1 && pageNumber <= totalPages.value) {
-    currentPage.value = pageNumber;
-    emit('page-changed', pageNumber);
+    currentPage.value = pageNumber
+    emit('page-changed', pageNumber)
   }
 }
 </script>
@@ -41,19 +41,23 @@ function goToPage(pageNumber) {
             Página: {{ currentPage }} de {{ totalPages }}
           </a>
         </li>
-        <li class="page-item" :class="{ 'disabled': currentPage === 1 }">
+        <!-- <li class="page-item" :class="{ 'disabled': currentPage === 1 }"> -->
+        <li class="page-item" v-if="currentPage !== 1">
           <a class="page-link shadow-none" href="#" aria-label="Previous" @click.prevent="goToPage(currentPage - 1)">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
+
         <li class="page-item" v-for="pageNumber in visiblePageNumbers" :key="pageNumber" :class="{ 'disabled': pageNumber === currentPage }">
           <a class="page-link shadow-none" href="#" @click.prevent="goToPage(pageNumber)">{{ pageNumber }}</a>
         </li>
-        <li class="page-item" :class="{ 'disabled': currentPage === totalPages }">
+
+        <li class="page-item" v-if="currentPage !== totalPages">
           <a class="page-link shadow-none" href="#" aria-label="Next" @click.prevent="goToPage(currentPage + 1)">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
+
         <li class="page-item">
           <a class="page-link disabled" href="#">
             Total de registros: {{ totalItems }}            

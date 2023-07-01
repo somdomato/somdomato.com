@@ -6,6 +6,7 @@ const config = useRuntimeConfig()
 
 const title = ref('Rádio Som do Mato')
 const cover = ref('/img/media/cover.svg')
+const coverDiv = ref(null)
 const audio = ref(null)
 const muted = ref(true)
 const volumeperc = ref(null)
@@ -127,7 +128,7 @@ onMounted(() => {
 <template>
   <ul class="navbar-nav mb-2 mb-md-0">
     <li class="nav-item d-flex align-items-center mx-auto">
-      <Cover :image="cover" :class="{'rotating': !muted }" />
+      <Cover :image="cover" />
 
       <div class="wrapper ms-2">
         <div class="title">
@@ -147,7 +148,7 @@ onMounted(() => {
           </div>
 
           <div>
-            <Icon name="ph:recycle-bold" @click="cycleStreamAndPlay" />
+            <Icon name="mingcute:refresh-3-fill" @click="cycleStreamAndPlay" />
           </div>
 
           <div ref="volume-container" class="volume-container">
@@ -166,45 +167,4 @@ onMounted(() => {
 </template>
 <style scoped lang="scss">
 @import '~/assets/scss/player.scss';
-
-.inanimated {
-  animation-play-state: paused;
-  animation-fill-mode: backwards;
-}
-
-@-webkit-keyframes rotating { /* Safari and Chrome */
-  from {
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-@keyframes rotating {
-  from {
-    -ms-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-  to {
-    -ms-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-.rotating {
-  -webkit-animation: rotating 2s linear infinite;
-  -moz-animation: rotating 2s linear infinite;
-  -ms-animation: rotating 2s linear infinite;
-  -o-animation: rotating 2s linear infinite;
-  animation: rotating 2s linear infinite;
-}
 </style>
