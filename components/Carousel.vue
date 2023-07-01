@@ -2,13 +2,16 @@
   <div id="carouselExampleSlidesOnly" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-interval="5000">
     <div class="carousel-inner rounded">
       <div class="carousel-item active right-align">
-        <img src="/img/banner/felipe_e_rodrigo.jpg" class="d-block w-100" alt="Gusttavo Lima">
+        <img src="/img/banner/jorge_e_mateus.webp" class="d-block" alt="Jorge & Mateus">
       </div>
       <div class="carousel-item">
-        <img src="/img/banner/gusttavo_lima.jpg" class="d-block w-100" alt="...">
+        <img src="/img/banner/lauana_prado.webp" class="d-block" alt="Lauana Prado">
       </div>
       <div class="carousel-item">
-        <img src="/img/banner/ze_neto_e_cristiano.jpg" class="d-block w-100" alt="Gusttavo Lima">
+        <img src="/img/banner/lais_yasmin.webp" class="d-block" alt="Lais Yasmin">
+      </div>
+      <div class="carousel-item">
+        <img src="/img/banner/yasmin_santos.webp" class="d-block" alt="Yasmin Santos">
       </div>
     </div>
     <img src="/img/media/cover.png" class="carousel-logo" alt="Rádio Som do Mato">
@@ -19,13 +22,12 @@
   max-height: 500px;
 }
 
-/*
 .carousel-item img {
-  object-fit: contain;
-  height: auto;
-  max-height: 500px;
+  height: 500px;
   width: 100%;
-}*/
+  object-fit: cover;
+  object-position: 50% 30%;
+}
 
 .carousel-logo {
   position: absolute;
@@ -36,28 +38,13 @@
   z-index: 1;
 }
 
-/*
-.carousel-inner {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+@media (max-width: 375px) {
+  .carousel>.carousel-inner {
+    max-height: 300px;
+  }
+  .carousel-item img {
+    height: 300px;
+    object-position: -80px 50%;
+  }
 }
-
-.carousel-item.right-align {
-  justify-content: flex-end;
-}
-
-@media (max-width: 768px) {
-  .carousel-inner {
-    flex-wrap: wrap;
-  }
-
-  .carousel-item {
-    width: 100%;
-  }
-
-  .carousel-item.right-align {
-    justify-content: flex-start;
-  }
-} */
 </style>

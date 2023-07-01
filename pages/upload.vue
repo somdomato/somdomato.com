@@ -13,6 +13,14 @@ const status = ref('')
 const artistFolders = ref(null)
 const genreOptions = computed(() => ['Geral', 'Universitário', 'Modão'])
 
+const handleKeyUp = (event) => {
+  if (event.target.value != '') {
+    console.info(event.target.value.lenght)
+    const textoLimpo = event.target.value.replace(/[^a-zA-Z0-9 _]/g, '').replace(/\s+/g, '_').toLowerCase()
+    customFolder.value = textoLimpo
+  }
+}
+
 const onSelectChange = () => {
   if (genre.value === 'Outro') {
     console.log('Opção personalizada selecionada:', genre.value)
@@ -91,7 +99,7 @@ onMounted(async () => {
                 <option v-for="folder in artistFolders" :key="folder" :value="folder.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')">{{ folder.name.toLowerCase() }}</option>
                 <option value="Outro">Outro</option>
               </select>
-              <input v-if="subfolder === 'Outro'" v-model="customFolder" type="text" class="form-control mt-2 border-2 border-secondary shadow-none" placeholder="Digite o nome do diretório" data-bs-theme="dark">
+              <input v-if="subfolder === 'Outro'" v-model="customFolder" @keyup="handleKeyUp" type="text" class="form-control mt-2 border-2 border-secondary shadow-none" placeholder="Digite o nome do diretório" data-bs-theme="dark">
             </div>
 
           </div>

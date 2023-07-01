@@ -1,21 +1,19 @@
+let socket = null
+
 export const wsConnect = (url = 'wss://ws.somdomato.com', callback = null) => {
-  const socket = new WebSocket(url)
+  socket = new WebSocket(url)
+  
+  socket.onopen = console.info('WS: Conexão estabelecida com o servidor')
+  socket.onerror = (error) => console.error('WS: Erro na conexão WebSocket:', error)
 
-  socket.onopen = () => {
-    console.info('WS: Conexão estabelecida com o servidor')
+  socket.onmessage = (event) => { 
+    if (callback !== null) {
+      console.info('WS: Message', event)
+      callback() 
+    }
   }
 
-  socket.onerror = (error) => {
-    console.error('WS: Erro na conexão WebSocket:', error)
-  }
-
-  socket.onmessage = (event) => {
-    if (callback !== null) callback()
-  }
-
-  socket.onclose = () => {
-    wsReconnect(url)
-  }
+  socket.onclose = () => wsReconnect(url)
 
   socket.onping = () => {
     socket.pong()
@@ -23,10 +21,10 @@ export const wsConnect = (url = 'wss://ws.somdomato.com', callback = null) => {
   }
 }
 
-const wsReconnect = (url = 'wss://ws.somdomato.com') => {
+const wsReconnect = (url) => {
   setTimeout(() => {
     console.warn('WS: Reconectando...')
-    wsConnect(url) // Substitua `urlWebSocket` pela sua URL WebSocket e `callback` pela sua função de retorno de chamada.
+    wsConnect(url)
   }, 5000)
 }
 
