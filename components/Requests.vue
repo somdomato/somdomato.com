@@ -43,9 +43,6 @@ async function fetchSongsByArtist(id, page = 1) {
 
     songsResult.value = songs
     totalSongs.value = total
-
-    // console.log(songs)
-
     totalSongsPages.value = Math.ceil(totalSongs.value / songsPageSize.value)
 
     setTimeout(() => fakeDiv.value.scrollIntoView({ behavior: "smooth" }), 1000)
@@ -61,9 +58,6 @@ async function fetchSongs(page) {
 
     songsResult.value = songs
     totalSongs.value = total
-
-    console.log(total)
-
     totalSongsPages.value = Math.ceil(totalSongs.value / songsPageSize.value)
 
     setTimeout(() => fakeDiv.value.scrollIntoView({ behavior: "smooth" }), 1000)
@@ -94,7 +88,6 @@ async function doRequest(id) {
 }
 
 watchEffect(currentSongsPage, fetchSongs)
-// watchEffect(currentArtistsPage, fetchArtists)
 </script>
 <template>
   <div class="col-12 order-4">
@@ -110,8 +103,8 @@ watchEffect(currentSongsPage, fetchSongs)
 
       <div class="container text-center">
         <div class="row g-1">
-          <div class="col-auto">Ou filtre por artista:</div>
-          <div class="col-auto d-flex flex-nowrap">
+          <div class="col-12 col-sm-auto">Ou filtre por artista:</div>
+          <div class="col-12 col-sm d-flex flex-wrap justify-content-center">
             <button v-for="l in alphabet" :key="l" type="button" class="btn btn-primary btn-sm mx-1" @click="fetchArtists(l)">{{ l.toUpperCase() }}</button>
             <button type="button" class="btn btn-primary btn-sm mx-1" @click="clearSearchArtists"><Icon name="solar:trash-bin-minimalistic-2-linear" /></button>
             <button type="button" class="btn btn-primary btn-sm mx-1" @click="fetchArtists('*')">Todos</button>
